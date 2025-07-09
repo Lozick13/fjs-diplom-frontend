@@ -1,0 +1,17 @@
+.base-button {
+  transition: 0.5s;
+  border: solid 1px #000;
+  border-radius: 15px;
+  background: #fff;
+  padding: 10px 40px;
+  width: 100%;
+  font-size: 20px;
+
+  &_secondary {
+    background: #000;
+    color: #fff;
+  }
+  &:hover {
+    opacity: 0.5;
+  }
+}
