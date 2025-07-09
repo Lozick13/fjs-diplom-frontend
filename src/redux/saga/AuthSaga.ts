@@ -16,11 +16,11 @@ import {
 function* loginSaga(action: PayloadAction<{ email: string; password: string }>) {
   try {
     const { email, password } = action.payload;
-    const response: { data: { email: string; name: string } } = yield call(
-      AuthApi.login,
-      { email, password },
-    );
-    yield put(loginSuccess(response.data));
+    const response: { email: string; name: string } = yield call(AuthApi.login, {
+      email,
+      password,
+    });
+    yield put(loginSuccess(response));
   } catch (error: unknown) {
     if (error instanceof Error) yield put(loginFailure(error.message));
     else yield put(loginFailure('Неизвестная ошибка'));

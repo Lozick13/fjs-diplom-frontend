@@ -13,7 +13,10 @@ interface RegisterData {
 }
 
 export const AuthApi = {
-  login: (data: LoginData) => api.post('/auth/login', data),
+  login: async (data: LoginData) => {
+    const response = await api.post('/auth/login', data);
+    return response.data;
+  },
   logout: () => api.post('/auth/logout'),
   register: (data: RegisterData) => api.post('/client/register', data),
 };

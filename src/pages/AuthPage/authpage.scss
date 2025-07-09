@@ -1,0 +1,28 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 50px;
+  width: 50vw;
+  max-width: 450px;
+  height: auto;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  &__title {
+    font-size: 32px;
+  }
+  &__logo {
+    transform: rotate(0deg);
+    width: 50px;
+  }
+}

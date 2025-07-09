@@ -1,0 +1,17 @@
+.form-template {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  width: 100%;
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
