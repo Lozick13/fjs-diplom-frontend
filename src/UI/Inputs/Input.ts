@@ -7,6 +7,7 @@ export type InputType =
   | 'password'
   | 'textarea'
   | 'checkbox'
+  | 'tel'
   | 'radio';
 
 export interface Input {

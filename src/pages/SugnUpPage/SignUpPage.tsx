@@ -1,39 +1,62 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import FormTemplate from '../../components/FormTemplate/FormTemplate';
 import LogoLoader from '../../components/LogoLoader/LogoLoader';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginRequest } from '../../redux/slices/authSlice';
+import { registerRequest } from '../../redux/slices/authSlice';
 import type { ButtonBase } from '../../UI/buttons/Button';
 import type { InputBase } from '../../UI/Inputs/Input';
-import './authpage.scss';
+import './signuppage.scss';
 
-const AuthPage = () => {
+const SignUpPage = () => {
   // hooks
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading, error, user } = useAppSelector(state => state.auth);
 
   // states
+  const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // authentication, reset states
-  const handleAuth = async (e: React.FormEvent) => {
+  // registration, reset states
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(loginRequest({ email, password }));
+    await dispatch(
+      registerRequest({
+        name,
+        email,
+        contactPhone: phone.split(' ').join(''),
+        password,
+      }),
+    );
   };
 
-  //redirect after successful auth
+  //redirect after successful registration
   useEffect(() => {
     if (user) {
+      setName('');
       setEmail('');
+      setPhone('');
       setPassword('');
       navigate('/hotels');
     }
   }, [user, navigate]);
 
   const inputs: InputBase[] = [
+    {
+      label: 'Имя',
+      id: 'name',
+      name: 'name',
+      value: name,
+      type: 'text',
+      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        setName(e.target.value),
+      placeholder: 'Ваше Имя',
+      required: true,
+    },
     {
       label: 'Почта',
       id: 'email',
@@ -44,6 +67,17 @@ const AuthPage = () => {
         setEmail(e.target.value),
       placeholder: 'Ваш Email',
       required: true,
+    },
+    {
+      label: 'Телефон',
+      id: 'phone',
+      name: 'phone',
+      value: phone,
+      type: 'tel',
+      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        setPhone(e.target.value),
+      placeholder: 'Ваш телефон',
+      required: false,
     },
     {
       label: 'Пароль',
@@ -60,35 +94,35 @@ const AuthPage = () => {
   ];
 
   const buttons: ButtonBase[] = [
-    // entry
+    // registration
     {
       click: () => {},
       type: 'submit',
-      text: 'Вход',
+      text: 'Регистрация',
     },
-    // registration
+    // entry
     {
       click: () => {
-        navigate('/signup');
+        navigate('/auth');
       },
       type: 'button',
-      text: 'Ещё нет аккаунта?',
+      text: 'Уже есть аккаунт?',
       secondary: true,
     },
   ];
 
   return (
     <>
-      <main className="auth">
-        <div className="auth__header">
+      <main className="signup">
+        <div className="signup__header">
           <LogoLoader started={loading} />
-          <h1 className="auth__title">{error ? error : 'Добро Пожаловать!'}</h1>
+          <h1 className="signup__title">{error ? error : 'Мы Вам рады!'}</h1>
         </div>
 
-        <FormTemplate handleSubmit={handleAuth} inputs={inputs} buttons={buttons} />
+        <FormTemplate handleSubmit={handleSignUp} inputs={inputs} buttons={buttons} />
       </main>
     </>
   );
 };
 
-export default AuthPage;
+export default SignUpPage;

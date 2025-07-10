@@ -1,4 +1,4 @@
-.auth {
+.signup {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,7 +7,7 @@
   border-radius: 20px;
   background-color: #fff;
   padding: 50px;
-  width: 60vw;
+  width: 50vw;
   max-width: 550px;
   height: auto;
 
@@ -17,14 +17,11 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    text-align: center;
   }
   &__title {
     font-size: 32px;
-    text-align: center;
   }
   &__logo {
-    transform: rotate(0deg);
     width: 50px;
   }
 }

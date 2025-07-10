@@ -1,39 +1,43 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
+import { DELAY } from '.';
 import { AuthApi } from '../../api/auth';
 import {
   loginFailure,
   loginRequest,
   loginSuccess,
-  logoutFailure,
   logoutRequest,
   logoutSuccess,
-  registerFailure,
   registerRequest,
   registerSuccess,
 } from '../slices/authSlice';
+import { ApiError } from './ApiError';
 
 function* loginSaga(action: PayloadAction<{ email: string; password: string }>) {
   try {
+    yield delay(DELAY);
     const { email, password } = action.payload;
-    const response: { email: string; name: string } = yield call(AuthApi.login, {
-      email,
-      password,
-    });
+    console.log(1);
+    const response: { email: string; name: string; contactPhone?: string } = yield call(
+      AuthApi.login,
+      {
+        email,
+        password,
+      },
+    );
     yield put(loginSuccess(response));
   } catch (error: unknown) {
-    if (error instanceof Error) yield put(loginFailure(error.message));
-    else yield put(loginFailure('Неизвестная ошибка'));
+    yield put(loginFailure(ApiError(error, 'Ошибка авторизации')));
   }
 }
 
 function* logoutSaga() {
   try {
+    yield delay(DELAY);
     yield call(AuthApi.logout);
     yield put(logoutSuccess());
   } catch (error: unknown) {
-    if (error instanceof Error) yield put(logoutFailure(error.message));
-    else yield put(logoutFailure('Неизвестная ошибка'));
+    yield put(loginFailure(ApiError(error, 'Ошибка выхода')));
   }
 }
 
@@ -46,6 +50,7 @@ function* registerSaga(
   }>,
 ) {
   try {
+    yield delay(DELAY);
     const response: { data: { id: string; email: string; name: string } } = yield call(
       AuthApi.register,
       action.payload,
@@ -57,8 +62,7 @@ function* registerSaga(
       }),
     );
   } catch (error: unknown) {
-    if (error instanceof Error) yield put(registerFailure(error.message));
-    else yield put(registerFailure('Неизвестная ошибка'));
+    yield put(loginFailure(ApiError(error, 'Ошибка регистрации')));
   }
 }
 
