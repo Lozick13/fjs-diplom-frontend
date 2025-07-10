@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px #000;
+  border-radius: 20px;
+  background: #fff6ba;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  &__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  &__logo img {
+    width: 45px;
+  }
+  &__nav {
+    display: flex;
+    gap: 15px;
+  }
+}

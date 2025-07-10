@@ -1,0 +1,24 @@
+.hotel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 15px;
+  background-color: #fffceb;
+  padding: 20px;
+  width: 100%;
+  max-width: 345px;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  &__title {
+    font-size: 28px;
+  }
+  &__img {
+    width: 60px;
+  }
+	&__description{
+		font-size: 16px;
+	}
+}
