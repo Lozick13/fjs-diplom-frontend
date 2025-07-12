@@ -15,7 +15,6 @@ interface RegisterData {
 export const AuthApi = {
   login: async (data: LoginData) => {
     const response = await api.post('/auth/login', data);
-    console.log('response', response);
     return response.data;
   },
   logout: () => api.post('/auth/logout'),

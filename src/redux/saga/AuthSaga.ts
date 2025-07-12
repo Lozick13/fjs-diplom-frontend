@@ -17,7 +17,6 @@ function* loginSaga(action: PayloadAction<{ email: string; password: string }>) 
   try {
     yield delay(DELAY);
     const { email, password } = action.payload;
-    console.log(1);
     const response: { email: string; name: string; contactPhone?: string } = yield call(
       AuthApi.login,
       {

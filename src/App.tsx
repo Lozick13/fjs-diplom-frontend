@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import Header from './components/Header/Header';
 import { useAppSelector } from './hooks';
 import AuthPage from './pages/AuthPage/AuthPage';
-import HotelPage from './pages/HotelsPage/HotelsPage';
+import HotelsPage from './pages/HotelsPage/HotelsPage';
 import SignUpPage from './pages/SugnUpPage/SignUpPage';
-import Header from './components/Header/Header';
 
 function App() {
   const location = useLocation();
@@ -19,8 +19,7 @@ function App() {
         <Route path="/" element={<Navigate to="/hotels" replace />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/hotels" element={requireAuth(<HotelPage />)} />
-        <Route path="/hotels/:id" element={requireAuth(<HotelPage />)} />
+        <Route path="/hotels" element={requireAuth(<HotelsPage />)} />
       </Routes>
     </>
   );

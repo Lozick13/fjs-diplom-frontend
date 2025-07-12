@@ -1,4 +1,3 @@
-// src/store/authSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
@@ -7,17 +6,35 @@ interface User {
   contactPhone?: string;
 }
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: AuthState = {
-  user: null,
-  loading: false,
-  error: null,
+
+const loadState = (): AuthState => {
+  try {
+    const serializedState = localStorage.getItem('authState');
+    if (serializedState === null)
+      return {
+        user: null,
+        loading: false,
+        error: null,
+      };
+
+    return JSON.parse(serializedState);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_error) {
+    return {
+      user: null,
+      loading: false,
+      error: null,
+    };
+  }
 };
+
+const initialState: AuthState = loadState();
 
 export const authSlice = createSlice({
   name: 'auth',
