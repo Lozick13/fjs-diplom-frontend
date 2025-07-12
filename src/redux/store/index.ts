@@ -2,11 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware, { type Middleware } from 'redux-saga';
 import { saga } from '../saga';
 import authReducer, { type AuthState } from '../slices/authSlice';
+import type { HotelRoomState } from '../slices/hotelRoomsSlice';
+import hotelRoomsReducer from '../slices/hotelRoomsSlice';
 import hotelReducer, { type HotelsState } from '../slices/hotelsSlice';
 
 type AppState = {
   auth: AuthState;
   hotels: HotelsState;
+  hotelRooms: HotelRoomState;
 };
 
 export const saveAuthState: Middleware<object, AppState> =
@@ -42,7 +45,7 @@ export const saveAuthState: Middleware<object, AppState> =
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   devTools: true,
-  reducer: { auth: authReducer, hotels: hotelReducer },
+  reducer: { auth: authReducer, hotels: hotelReducer, hotelRooms: hotelRoomsReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, saveAuthState),
 });
