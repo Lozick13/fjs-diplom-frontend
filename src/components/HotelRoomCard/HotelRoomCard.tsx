@@ -68,7 +68,7 @@ const HotelRoomCard: React.FC<props> = ({ id, description, images, hotel }) => {
         <p className="hotel-room-card__description">{description}</p>
         <BaseButton
           text="Перейти"
-          click={() => navigate(`/hotels/${hotel.id}/rooms/${id}`)}
+          click={() => navigate(`/hotel-rooms/${id}`)}
         />
       </article>
     </>

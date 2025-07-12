@@ -2,6 +2,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import { useAppSelector } from './hooks';
 import AuthPage from './pages/AuthPage/AuthPage';
+import HotelRoomPage from './pages/HotelRoomPage/HotelRoomPage';
 import HotelRoomsPage from './pages/HotelRoomsPage/HotelRoomsPage';
 import HotelsPage from './pages/HotelsPage/HotelsPage';
 import SignUpPage from './pages/SugnUpPage/SignUpPage';
@@ -21,6 +22,10 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/hotel-rooms" element={requireAuth(<HotelRoomsPage />)} />
+        <Route
+          path="/hotel-rooms/:id"
+          element={requireAuth(<HotelRoomPage />)}
+        />
         <Route path="/hotels" element={requireAuth(<HotelsPage />)} />
       </Routes>
     </>
