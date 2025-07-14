@@ -5,7 +5,7 @@ const LogoLoader = ({ started }: { started: boolean }) => {
     <>
       <img
         className={`logo-loader ${started ? 'logo-loader_active' : ''}`}
-        src="./assets/honey-icon.png"
+        src="/assets/honey-icon.png"
         alt="logo"
       />
     </>

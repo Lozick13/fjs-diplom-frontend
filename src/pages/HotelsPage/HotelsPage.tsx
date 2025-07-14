@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import HotelCard from '../../components/HotelCard/HotelCard';
 import LogoLoader from '../../components/LogoLoader/LogoLoader';
+import Title from '../../components/Title/Title';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { hotelsRequest } from '../../redux/slices/hotelsSlice';
 import './hotelspage.scss';
@@ -16,7 +17,8 @@ const HotelsPage = () => {
   return (
     <>
       <main className="hotels">
-        <h1 className="hotels__title">Гостиницы</h1>
+        <Title text="Гостиницы" />
+
         <section className="hotels__cards">
           {loading && <LogoLoader started />}
           {error && <p>error</p>}

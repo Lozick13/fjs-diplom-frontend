@@ -1,0 +1,14 @@
+.title {
+  width: 100%;
+  font-weight: 700;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &__back {
+    position: absolute;
+    left: 0;
+  }
+}
