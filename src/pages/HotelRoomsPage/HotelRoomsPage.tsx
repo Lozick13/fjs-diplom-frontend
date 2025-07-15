@@ -1,28 +1,43 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import HotelRoomCard from '../../components/HotelRoomCard/HotelRoomCard';
 import LogoLoader from '../../components/LogoLoader/LogoLoader';
 import Title from '../../components/Title/Title';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { hotelRoomsRequest } from '../../redux/slices/hotelRoomsSlice';
+import BaseButton from '../../UI/buttons/BaseButton/BaseButton';
 import './hotelroomspage.scss';
 
 const HotelRoomsPage = () => {
   const dispatch = useAppDispatch();
-  const { loading, error, hotelRooms } = useAppSelector(state => state.hotelRooms);
+  const { loading, error, hotelRooms, hasMore } = useAppSelector(
+    state => state.hotelRooms,
+  );
+  const loadHotelRooms = useCallback(
+    (reset = false) => {
+      dispatch(
+        hotelRoomsRequest({
+          reset,
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
-    dispatch(hotelRoomsRequest());
-  }, [dispatch]);
+    loadHotelRooms(true);
+  }, [loadHotelRooms]);
 
+  const handleLoadMore = useCallback(() => {
+    if (!loading && hasMore) {
+      loadHotelRooms();
+    }
+  }, [loading, hasMore, loadHotelRooms]);
   return (
     <>
       <main className="hotel-rooms">
         <Title text="Комнаты гостиниц" />
-
         <section className="hotel-rooms__cards">
-          {loading && <LogoLoader started />}
-          {error && <p>error</p>}
-          {hotelRooms && !error && !loading ? (
+          {hotelRooms ? (
             hotelRooms.map(room => (
               <HotelRoomCard
                 key={room.id}
@@ -34,8 +49,13 @@ const HotelRoomsPage = () => {
             ))
           ) : (
             <p>Нет доступных комнат</p>
-          )}
-        </section>
+          )}{' '}
+          {loading && <LogoLoader started />}
+          {error && <p>error</p>}
+        </section>{' '}
+        {hasMore && !loading && hotelRooms.length > 0 && (
+          <BaseButton text="Показать еще" click={handleLoadMore} type="button" />
+        )}
       </main>
     </>
   );

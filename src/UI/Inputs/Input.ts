@@ -13,9 +13,11 @@ export type InputType =
 export interface Input {
   id: string;
   name: string;
-  value: string | number;
+  value: string | number | boolean;
   type: InputType;
-  change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  change: (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => void;
   min?: number;
   placeholder?: string;
   required: boolean;
@@ -26,6 +28,7 @@ export interface InputBase extends Input {
   label?: string;
   multiline?: boolean;
   rows?: number;
+  lineDisplay?: boolean;
 }
 
 export interface InputChat extends Input {

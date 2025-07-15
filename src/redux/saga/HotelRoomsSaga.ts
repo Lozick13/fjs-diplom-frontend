@@ -1,4 +1,5 @@
-import { call, delay, put, takeLatest } from 'redux-saga/effects';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
 import { DELAY } from '.';
 import { HotelRoomsApi } from '../../api/hotel-rooms';
 import {
@@ -11,12 +12,23 @@ import {
   type HotelRoom,
 } from '../slices/hotelRoomsSlice';
 import { ApiError } from './ApiError';
-import type { PayloadAction } from '@reduxjs/toolkit';
 
-function* hotelRoomsDataSaga() {
+function* hotelRoomsDataSaga(
+  action: PayloadAction<{ reset?: boolean; hotel?: string; isEnabled?: boolean }>,
+) {
   try {
     yield delay(DELAY);
-    const response: HotelRoom[] = yield call(HotelRoomsApi.hotelRooms);
+    const { reset, hotel, isEnabled } = action.payload;
+    const { limit, offset } = yield select(state => state.hotelRooms.searchParams);
+
+    const params = {
+      limit,
+      offset: reset ? 0 : offset,
+      hotel,
+      isEnabled,
+    };
+
+    const response: HotelRoom[] = yield call(HotelRoomsApi.hotelRooms, params);
     yield put(hotelRoomsSuccess(response));
   } catch (error: unknown) {
     yield put(hotelRoomsFailure(ApiError(error, 'Ошибка авторизации')));

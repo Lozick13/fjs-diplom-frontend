@@ -50,7 +50,7 @@ const HotelsPage = () => {
           }}
         />
 
-        <div className="hotels__search">
+        <section className="hotels__search">
           <FormTemplate
             handleSubmit={handleSearch}
             inputs={[
@@ -67,7 +67,7 @@ const HotelsPage = () => {
             buttons={[]}
             lineDisplay
           />
-        </div>
+        </section>
 
         <section className="hotels__cards">
           {hotels ? (

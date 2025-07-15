@@ -22,7 +22,11 @@ const FormTemplate: React.FC<Form> = ({
       onSubmit={handleSubmit}
       className={`form-template${lineDisplay ? ' form-template_line-display' : ''}`}
     >
-      <div className="form-template__inputs">
+      <div
+        className={`form-template__inputs${
+          lineDisplay ? ' form-template__inputs_line-display' : ''
+        }`}
+      >
         {inputs.map(input => (
           <BaseInput
             key={input.id}
@@ -38,20 +42,23 @@ const FormTemplate: React.FC<Form> = ({
             disabled={input.disabled}
             multiline={input.multiline}
             rows={input.rows}
+            lineDisplay={input.lineDisplay}
           />
         ))}
       </div>
-      <div className="form-template__buttons">
-        {buttons.map((button, index) => (
-          <BaseButton
-            key={index}
-            click={button.click}
-            text={button.text}
-            type={button.type}
-            secondary={button.secondary}
-          />
-        ))}
-      </div>
+      {buttons.length > 0 && (
+        <div className="form-template__buttons">
+          {buttons.map((button, index) => (
+            <BaseButton
+              key={index}
+              click={button.click}
+              text={button.text}
+              type={button.type}
+              secondary={button.secondary}
+            />
+          ))}
+        </div>
+      )}
     </form>
   );
 };

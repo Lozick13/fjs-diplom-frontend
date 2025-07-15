@@ -2,7 +2,17 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
   height: 100%;
+
+  &_line-display {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: auto;
+  }
+
   &__label {
     padding-left: 10px;
     font-weight: 500;
@@ -12,8 +22,13 @@
     border: solid grey 1px;
     border-radius: 15px;
     padding: 10px;
+    width: 100%;
     height: 100%;
     font-size: 16px;
+
+    &_checkbox {
+      cursor: pointer;
+    }
   }
   &__textarea {
     resize: none;

@@ -12,30 +12,55 @@ export interface HotelRoom {
 }
 
 export interface HotelRoomState {
-  hotelRooms: HotelRoom[] | null;
+  hotelRooms: HotelRoom[];
   hotelRoom: HotelRoom | null;
   loading: boolean;
   error: string | null;
+  hasMore: boolean;
+  searchParams: {
+    limit: number;
+    offset: number;
+    hotel: string;
+    isEnabled: boolean;
+  };
 }
 
 const initialState: HotelRoomState = {
-  hotelRooms: null,
+  hotelRooms: [],
   hotelRoom: null,
   loading: false,
   error: null,
+  hasMore: true,
+  searchParams: {
+    limit: 10,
+    offset: 0,
+    hotel: '',
+    isEnabled: true,
+  },
 };
 
 export const hotelRoomsSlice = createSlice({
   name: 'hotelRooms',
   initialState,
   reducers: {
-    hotelRoomsRequest: state => {
+    hotelRoomsRequest: (
+      state,
+      action: PayloadAction<{ reset?: boolean; hotel?: string; isEnabled?: boolean }>,
+    ) => {
       state.loading = true;
       state.error = null;
+
+      if (action.payload.reset) {
+        state.hotelRooms = [];
+        state.searchParams.offset = 0;
+        state.hasMore = true;
+      }
     },
     hotelRoomsSuccess: (state, action: PayloadAction<HotelRoom[]>) => {
       state.loading = false;
-      state.hotelRooms = action.payload;
+      state.hotelRooms = [...state.hotelRooms, ...action.payload];
+      state.hasMore = action.payload.length === state.searchParams.limit;
+      state.searchParams.offset = state.hotelRooms.length;
     },
     hotelRoomsFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;

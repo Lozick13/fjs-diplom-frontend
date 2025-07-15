@@ -14,9 +14,10 @@ const BaseInput = ({
   disabled,
   multiline = false,
   rows = 3,
+  lineDisplay = false,
 }: InputBase & { multiline?: boolean; rows?: number }) => {
   return (
-    <div className="base-input">
+    <div className={`base-input${lineDisplay ? ' base-input_line-display' : ''}`}>
       {label && (
         <label htmlFor={id} className="base-input__label">
           {label}
@@ -26,7 +27,7 @@ const BaseInput = ({
         <textarea
           id={id}
           name={name}
-          value={value}
+          value={value as string | number}
           placeholder={placeholder}
           required={required}
           onChange={change}
@@ -38,14 +39,17 @@ const BaseInput = ({
         <input
           id={id}
           name={name}
-          value={value}
+          checked={type === 'checkbox' ? Boolean(value) : undefined}
+          value={type !== 'checkbox' && typeof value !== 'boolean' ? value : undefined}
           type={type}
           min={min}
           placeholder={placeholder}
           required={required}
           onChange={change}
           disabled={disabled}
-          className="base-input__place"
+          className={`base-input__place ${
+            type === 'checkbox' ? 'base-input__place_checkbox' : ''
+          }`}
         />
       )}
     </div>
