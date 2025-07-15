@@ -6,19 +6,33 @@ const BaseInput = ({
   id,
   name,
   value,
-  type,
+  type = 'text',
   change,
   min,
   placeholder,
   required,
   disabled,
-}: InputBase) => {
+  multiline = false,
+  rows = 3,
+}: InputBase & { multiline?: boolean; rows?: number }) => {
   return (
-    <>
-      <div className="base-input">
-        <label htmlFor={id} className="base-input__label">
-          {label}
-        </label>
+    <div className="base-input">
+      <label htmlFor={id} className="base-input__label">
+        {label}
+      </label>
+      {multiline ? (
+        <textarea
+          id={id}
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          required={required}
+          onChange={change}
+          disabled={disabled}
+          className="base-input__place base-input__textarea"
+          rows={rows}
+        />
+      ) : (
         <input
           id={id}
           name={name}
@@ -31,8 +45,8 @@ const BaseInput = ({
           disabled={disabled}
           className="base-input__place"
         />
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

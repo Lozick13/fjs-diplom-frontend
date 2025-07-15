@@ -27,6 +27,8 @@ const FormTemplate: React.FC<Form> = ({ handleSubmit, inputs, buttons }) => {
             placeholder={input.placeholder}
             required={input.required}
             disabled={input.disabled}
+            multiline={input.multiline}
+            rows={input.rows}
           />
         ))}
       </div>

@@ -8,16 +8,18 @@ export interface Hotel {
 
 export interface HotelsState {
   hotels: Hotel[] | null;
-  hotel: Hotel | null;
   loading: boolean;
   error: string | null;
+  adding: boolean;
+  addError: string | null;
 }
 
 const initialState: HotelsState = {
   hotels: [],
-  hotel: null,
   loading: false,
   error: null,
+  adding: false,
+  addError: null,
 };
 
 export const hotelSlice = createSlice({
@@ -36,10 +38,34 @@ export const hotelSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    addHotelRequest: (
+      state,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _action: PayloadAction<{ title: string; description: string }>,
+    ) => {
+      state.adding = true;
+      state.addError = null;
+    },
+    addHotelSuccess: (state, action: PayloadAction<Hotel>) => {
+      state.adding = false;
+      if (state.hotels) state.hotels.unshift(action.payload);
+    },
+    addHotelFailure: (state, action: PayloadAction<string>) => {
+      state.adding = false;
+      state.addError = action.payload;
+    },
   },
 });
 
-export const { hotelsRequest, hotelsSuccess, hotelsFailure } = hotelSlice.actions;
+export const {
+  hotelsRequest,
+  hotelsSuccess,
+  hotelsFailure,
+  addHotelRequest,
+  addHotelSuccess,
+  addHotelFailure,
+} = hotelSlice.actions;
 
 const hotelReducer = hotelSlice.reducer;
 export default hotelReducer;

@@ -24,6 +24,8 @@ export interface Input {
 
 export interface InputBase extends Input {
   label?: string;
+  multiline?: boolean;
+  rows?: number;
 }
 
 export interface InputChat extends Input {

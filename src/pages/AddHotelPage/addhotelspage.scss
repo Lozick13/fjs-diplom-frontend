@@ -1,0 +1,22 @@
+.add-hotel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin: 25px;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 1200px;
+
+  &__form {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+}
