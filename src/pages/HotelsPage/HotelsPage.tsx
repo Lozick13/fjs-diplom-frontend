@@ -6,6 +6,7 @@ import LogoLoader from '../../components/LogoLoader/LogoLoader';
 import Title from '../../components/Title/Title';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { hotelsRequest } from '../../redux/slices/hotelsSlice';
+import BaseButton from '../../UI/buttons/BaseButton/BaseButton';
 import './hotelspage.scss';
 
 const HotelsPage = () => {
@@ -16,12 +17,7 @@ const HotelsPage = () => {
 
   const loadHotels = useCallback(
     (reset = false) => {
-      dispatch(
-        hotelsRequest({
-          title: searchQuery,
-          offset: reset ? 0 : undefined,
-        }),
-      );
+      dispatch(hotelsRequest({ reset, title: reset ? searchQuery : undefined }));
     },
     [dispatch, searchQuery],
   );
@@ -29,23 +25,6 @@ const HotelsPage = () => {
   useEffect(() => {
     loadHotels(true);
   }, [loadHotels]);
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      !hasMore ||
-      loading
-    ) {
-      return;
-    }
-    loadHotels();
-  }, [hasMore, loading, loadHotels]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
 
   const handleSearch = useCallback(
     (e: React.FormEvent) => {
@@ -55,6 +34,11 @@ const HotelsPage = () => {
     [loadHotels],
   );
 
+  const handleLoadMore = useCallback(() => {
+    if (!loading && hasMore) {
+      loadHotels();
+    }
+  }, [loading, hasMore, loadHotels]);
   return (
     <>
       <main className="hotels">
@@ -86,9 +70,7 @@ const HotelsPage = () => {
         </div>
 
         <section className="hotels__cards">
-          {loading && <LogoLoader started />}
-          {error && <p>error</p>}
-          {hotels && !loading && !error ? (
+          {hotels ? (
             hotels.map(hotel => (
               <HotelCard
                 key={hotel.id}
@@ -99,8 +81,14 @@ const HotelsPage = () => {
             ))
           ) : (
             <p>Нет доступных отелей</p>
-          )}
+          )}{' '}
+          {loading && <LogoLoader started />}
+          {error && <p>error</p>}
         </section>
+
+        {hasMore && !loading && hotels.length > 0 && (
+          <BaseButton text="Показать еще" click={handleLoadMore} type="button" />
+        )}
       </main>
     </>
   );

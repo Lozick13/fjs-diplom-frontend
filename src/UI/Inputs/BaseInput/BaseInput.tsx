@@ -17,9 +17,11 @@ const BaseInput = ({
 }: InputBase & { multiline?: boolean; rows?: number }) => {
   return (
     <div className="base-input">
-      <label htmlFor={id} className="base-input__label">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className="base-input__label">
+          {label}
+        </label>
+      )}
       {multiline ? (
         <textarea
           id={id}

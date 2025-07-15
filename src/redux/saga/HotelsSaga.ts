@@ -1,7 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { call, delay, put, takeLatest } from 'redux-saga/effects';
-import { DELAY } from '.';
-import { HotelsApi, type SearchHotelParams } from '../../api/hotels';
+import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
+import { HotelsApi } from '../../api/hotels';
 import {
   addHotelFailure,
   addHotelRequest,
@@ -12,11 +11,21 @@ import {
   type Hotel,
 } from '../slices/hotelsSlice';
 import { ApiError } from './ApiError';
+import { DELAY } from '.';
 
-function* hotelsDataSaga(action: PayloadAction<Partial<SearchHotelParams>>) {
+function* hotelsDataSaga(action: PayloadAction<{ reset?: boolean; title?: string }>) {
   try {
     yield delay(DELAY);
-    const response: Hotel[] = yield call(HotelsApi.search, action.payload);
+    const { reset, title } = action.payload;
+    const { limit, offset } = yield select(state => state.hotels.searchParams);
+
+    const params = {
+      limit,
+      offset: reset ? 0 : offset,
+      title: title,
+    };
+
+    const response: Hotel[] = yield call(HotelsApi.search, params);
     yield put(hotelsSuccess(response));
   } catch (error: unknown) {
     yield put(hotelsFailure(ApiError(error, 'Ошибка загрузки отелей')));
