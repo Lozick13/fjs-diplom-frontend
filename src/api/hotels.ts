@@ -1,8 +1,14 @@
 import api from './api';
 
+export interface SearchHotelParams {
+  limit?: number;
+  offset?: number;
+  title?: string;
+}
+
 export const HotelsApi = {
-  hotels: async () => {
-    const response = await api.get('/admin/hotels');
+  search: async (params: SearchHotelParams) => {
+    const response = await api.get('/admin/hotels', { params });
     return response.data;
   },
   create: async (data: { title: string; description: string }) => {

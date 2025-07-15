@@ -29,7 +29,7 @@ const AuthPage = () => {
     if (user) {
       setEmail('');
       setPassword('');
-      navigate('/hotels');
+      navigate('/hotel-rooms');
     }
   }, [user, navigate]);
 

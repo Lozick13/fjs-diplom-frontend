@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { call, delay, put, takeLatest } from 'redux-saga/effects';
 import { DELAY } from '.';
-import { HotelsApi } from '../../api/hotels';
+import { HotelsApi, type SearchHotelParams } from '../../api/hotels';
 import {
   addHotelFailure,
   addHotelRequest,
@@ -13,13 +13,13 @@ import {
 } from '../slices/hotelsSlice';
 import { ApiError } from './ApiError';
 
-function* hotelsDataSaga() {
+function* hotelsDataSaga(action: PayloadAction<Partial<SearchHotelParams>>) {
   try {
     yield delay(DELAY);
-    const response: Hotel[] = yield call(HotelsApi.hotels);
+    const response: Hotel[] = yield call(HotelsApi.search, action.payload);
     yield put(hotelsSuccess(response));
   } catch (error: unknown) {
-    yield put(hotelsFailure(ApiError(error, 'Ошибка авторизации')));
+    yield put(hotelsFailure(ApiError(error, 'Ошибка загрузки отелей')));
   }
 }
 

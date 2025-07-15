@@ -1,8 +1,11 @@
 .base-input {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 10px;
+  height: 100%;
   &__label {
+    position: absolute;
     padding-left: 10px;
     font-weight: 500;
     font-size: 18px;
@@ -11,6 +14,7 @@
     border: solid grey 1px;
     border-radius: 15px;
     padding: 10px;
+    height: 100%;
     font-size: 16px;
   }
   &__textarea {

@@ -10,6 +10,11 @@
   width: 100%;
   max-width: 1200px;
 
+  &__search {
+    width: 95%;
+    height: 100%;
+  }
+
   &__cards {
     display: flex;
     flex-wrap: wrap;

@@ -41,7 +41,7 @@ const SignUpPage = () => {
       setEmail('');
       setPhone('');
       setPassword('');
-      navigate('/hotels');
+      navigate('/hotel-rooms');
     }
   }, [user, navigate]);
 

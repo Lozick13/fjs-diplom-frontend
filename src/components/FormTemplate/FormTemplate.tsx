@@ -8,11 +8,20 @@ interface Form {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   inputs: InputBase[];
   buttons: ButtonBase[];
+  lineDisplay?: boolean;
 }
 
-const FormTemplate: React.FC<Form> = ({ handleSubmit, inputs, buttons }) => {
+const FormTemplate: React.FC<Form> = ({
+  handleSubmit,
+  inputs,
+  buttons,
+  lineDisplay = false,
+}) => {
   return (
-    <form onSubmit={handleSubmit} className="form-template">
+    <form
+      onSubmit={handleSubmit}
+      className={`form-template${lineDisplay ? ' form-template_line-display' : ''}`}
+    >
       <div className="form-template__inputs">
         {inputs.map(input => (
           <BaseInput

@@ -1,14 +1,19 @@
 .title {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   font-weight: 700;
   font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
 
   &__back {
     position: absolute;
     left: 0;
+  }
+
+  &__additionally {
+    position: absolute;
+    right: 0;
   }
 }
