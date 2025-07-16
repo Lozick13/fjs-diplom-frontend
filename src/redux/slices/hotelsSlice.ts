@@ -8,6 +8,7 @@ export interface Hotel {
 
 interface HotelsState {
   hotels: Hotel[];
+  hotel: Hotel | null;
   loading: boolean;
   error: string | null;
   adding: boolean;
@@ -22,6 +23,7 @@ interface HotelsState {
 
 const initialState: HotelsState = {
   hotels: [],
+  hotel: null,
   loading: false,
   error: null,
   adding: false,
@@ -62,6 +64,20 @@ export const hotelSlice = createSlice({
       state.error = action.payload;
     },
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    hotelRequest: (state, _action: PayloadAction<string>) => {
+      state.loading = true;
+      state.error = null;
+    },
+    hotelSuccess: (state, action: PayloadAction<Hotel>) => {
+      state.loading = false;
+      state.hotel = action.payload;
+    },
+    hotelFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     addHotelRequest: (
       state,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -85,6 +101,9 @@ export const {
   hotelsRequest,
   hotelsSuccess,
   hotelsFailure,
+  hotelRequest,
+  hotelSuccess,
+  hotelFailure,
   addHotelRequest,
   addHotelSuccess,
   addHotelFailure,

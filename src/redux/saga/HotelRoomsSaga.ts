@@ -3,6 +3,9 @@ import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
 import { DELAY } from '.';
 import { HotelRoomsApi } from '../../api/hotel-rooms';
 import {
+  addHotelRoomFailure,
+  addHotelRoomRequest,
+  addHotelRoomSuccess,
   hotelRoomFailure,
   hotelRoomRequest,
   hotelRoomsFailure,
@@ -46,7 +49,30 @@ function* hotelRoomDataSaga(action: PayloadAction<string>) {
   }
 }
 
+function* addHotelRoomSaga(
+  action: PayloadAction<{
+    hotel: string;
+    description: string;
+    images: File[];
+    isEnabled: boolean;
+  }>,
+) {
+  try {
+    const { hotel, description, images, isEnabled } = action.payload;
+    const response: HotelRoom = yield call(HotelRoomsApi.create, {
+      hotel,
+      description,
+      images,
+      isEnabled,
+    });
+    yield put(addHotelRoomSuccess(response));
+  } catch (error: unknown) {
+    yield put(addHotelRoomFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
+  }
+}
+
 export function* hotelRoomsSaga() {
   yield takeLatest(hotelRoomsRequest, hotelRoomsDataSaga);
   yield takeLatest(hotelRoomRequest, hotelRoomDataSaga);
+  yield takeLatest(addHotelRoomRequest, addHotelRoomSaga);
 }

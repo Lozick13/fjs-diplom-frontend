@@ -11,7 +11,9 @@ const BaseInput = ({
   min,
   placeholder,
   required,
+  accept,
   disabled,
+  multiple,
   multiline = false,
   rows = 3,
   lineDisplay = false,
@@ -43,6 +45,8 @@ const BaseInput = ({
           value={type !== 'checkbox' && typeof value !== 'boolean' ? value : undefined}
           type={type}
           min={min}
+          accept={accept}
+          multiple={multiple}
           placeholder={placeholder}
           required={required}
           onChange={change}

@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 export interface HotelRoom {
   id: string;
   description: string;
-  images: [string];
+  images: string[];
   hotel: {
     id: string;
     title: string;
@@ -16,6 +16,8 @@ export interface HotelRoomState {
   hotelRoom: HotelRoom | null;
   loading: boolean;
   error: string | null;
+  adding: boolean;
+  addError: string | null;
   hasMore: boolean;
   searchParams: {
     limit: number;
@@ -30,6 +32,8 @@ const initialState: HotelRoomState = {
   hotelRoom: null,
   loading: false,
   error: null,
+  adding: false,
+  addError: null,
   hasMore: true,
   searchParams: {
     limit: 10,
@@ -80,6 +84,28 @@ export const hotelRoomsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    addHotelRoomRequest: (
+      state,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _action: PayloadAction<{
+        hotel: string;
+        description: string;
+        images: File[];
+        isEnabled: boolean;
+      }>,
+    ) => {
+      state.adding = true;
+      state.addError = null;
+    },
+    addHotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
+      state.adding = false;
+      if (state.hotelRooms) state.hotelRooms.unshift(action.payload);
+    },
+    addHotelRoomFailure: (state, action: PayloadAction<string>) => {
+      state.adding = false;
+      state.addError = action.payload;
+    },
   },
 });
 
@@ -90,6 +116,9 @@ export const {
   hotelRoomRequest,
   hotelRoomSuccess,
   hotelRoomFailure,
+  addHotelRoomSuccess,
+  addHotelRoomRequest,
+  addHotelRoomFailure,
 } = hotelRoomsSlice.actions;
 
 const hotelRoomsReducer = hotelRoomsSlice.reducer;

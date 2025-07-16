@@ -11,3 +11,6 @@ export interface ButtonImg extends Button {
   img: string;
   color?: string;
 }
+export interface ButtonIcon extends Button {
+  icon: string;
+}

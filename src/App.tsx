@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import { useAppSelector } from './hooks';
 import AddHotelPage from './pages/AddHotelPage/AddHotelsPage';
 import AuthPage from './pages/AuthPage/AuthPage';
+import HotelPage from './pages/HotelPage/HotelPage';
 import HotelRoomPage from './pages/HotelRoomPage/HotelRoomPage';
 import HotelRoomsPage from './pages/HotelRoomsPage/HotelRoomsPage';
 import HotelsPage from './pages/HotelsPage/HotelsPage';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/hotel-rooms" element={requireAuth(<HotelRoomsPage />)} />
         <Route path="/hotel-rooms/:id" element={requireAuth(<HotelRoomPage />)} />
+        <Route path="/hotels/:id" element={requireAuth(<HotelPage />)} />
         <Route path="/hotels/create" element={requireAuth(<AddHotelPage />)} />
         <Route path="/hotels" element={requireAuth(<HotelsPage />)} />
       </Routes>

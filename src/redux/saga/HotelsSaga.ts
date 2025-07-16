@@ -1,17 +1,20 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
+import { DELAY } from '.';
 import { HotelsApi } from '../../api/hotels';
 import {
   addHotelFailure,
   addHotelRequest,
   addHotelSuccess,
+  hotelFailure,
+  hotelRequest,
   hotelsFailure,
   hotelsRequest,
   hotelsSuccess,
+  hotelSuccess,
   type Hotel,
 } from '../slices/hotelsSlice';
 import { ApiError } from './ApiError';
-import { DELAY } from '.';
 
 function* hotelsDataSaga(action: PayloadAction<{ reset?: boolean; title?: string }>) {
   try {
@@ -32,6 +35,17 @@ function* hotelsDataSaga(action: PayloadAction<{ reset?: boolean; title?: string
   }
 }
 
+function* hotelDataSaga(action: PayloadAction<string>) {
+  try {
+    const { payload: id } = action;
+    yield delay(DELAY);
+    const response: Hotel = yield call(HotelsApi.hotel, id);
+    yield put(hotelSuccess(response));
+  } catch (error: unknown) {
+    yield put(hotelFailure(ApiError(error, 'Ошибка авторизации')));
+  }
+}
+
 function* addHotelSaga(action: PayloadAction<{ title: string; description: string }>) {
   try {
     const { title, description } = action.payload;
@@ -44,5 +58,6 @@ function* addHotelSaga(action: PayloadAction<{ title: string; description: strin
 
 export function* hotelsSaga() {
   yield takeLatest(hotelsRequest.type, hotelsDataSaga);
+  yield takeLatest(hotelRequest.type, hotelDataSaga);
   yield takeLatest(addHotelRequest.type, addHotelSaga);
 }
