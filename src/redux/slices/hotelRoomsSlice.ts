@@ -106,6 +106,29 @@ export const hotelRoomsSlice = createSlice({
       state.adding = false;
       state.addError = action.payload;
     },
+
+    updateHotelRoomRequest: (
+      state,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _action: PayloadAction<{
+        id: string;
+        hotel: string;
+        description: string;
+        images: File[];
+        isEnabled: boolean;
+      }>,
+    ) => {
+      state.adding = true;
+      state.addError = null;
+    },
+    updateHotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
+      state.adding = false;
+      if (state.hotelRooms) state.hotelRooms.unshift(action.payload);
+    },
+    updateHotelRoomFailure: (state, action: PayloadAction<string>) => {
+      state.adding = false;
+      state.addError = action.payload;
+    },
   },
 });
 
@@ -119,6 +142,9 @@ export const {
   addHotelRoomSuccess,
   addHotelRoomRequest,
   addHotelRoomFailure,
+  updateHotelRoomSuccess,
+  updateHotelRoomRequest,
+  updateHotelRoomFailure,
 } = hotelRoomsSlice.actions;
 
 const hotelRoomsReducer = hotelRoomsSlice.reducer;

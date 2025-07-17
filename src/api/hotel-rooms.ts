@@ -38,4 +38,27 @@ export const HotelRoomsApi = {
 
     return response.data;
   },
+  update: async (data: {
+    id: string;
+    hotel: string;
+    description: string;
+    images: File[];
+    isEnabled: boolean;
+  }) => {
+    const formData = new FormData();
+    formData.append('hotel', data.hotel);
+    formData.append('description', data.description);
+    formData.append('isEnabled', String(data.isEnabled));
+    data.images.forEach(file => {
+      formData.append('images', file);
+    });
+console.log('formData',formData)
+    const response = await api.put(`/admin/hotel-rooms/${data.id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response.data;
+  },
 };

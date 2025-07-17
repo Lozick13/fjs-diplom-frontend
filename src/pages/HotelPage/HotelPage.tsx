@@ -11,8 +11,8 @@ import {
 import { hotelRequest, updateHotelRequest } from '../../redux/slices/hotelsSlice';
 import IconButton from '../../UI/buttons/IconButton/IconButton';
 import NavigateButton from '../../UI/buttons/NavigateButton/NavigateButton';
-import AddRoomModal from '../AddRoomModal/AddRoomModal';
-import EditHotelModal from '../EditHotelModal/EditHotelModal';
+import AddRoomModal from '../../modals/AddRoomModal/AddRoomModal';
+import EditHotelModal from '../../modals/EditHotelModal/EditHotelModal';
 import './hotelpage.scss';
 
 const HotelPage = () => {

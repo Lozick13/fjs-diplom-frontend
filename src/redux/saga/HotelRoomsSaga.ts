@@ -12,6 +12,9 @@ import {
   hotelRoomsRequest,
   hotelRoomsSuccess,
   hotelRoomSuccess,
+  updateHotelRoomFailure,
+  updateHotelRoomRequest,
+  updateHotelRoomSuccess,
   type HotelRoom,
 } from '../slices/hotelRoomsSlice';
 import { ApiError } from './ApiError';
@@ -58,16 +61,27 @@ function* addHotelRoomSaga(
   }>,
 ) {
   try {
-    const { hotel, description, images, isEnabled } = action.payload;
-    const response: HotelRoom = yield call(HotelRoomsApi.create, {
-      hotel,
-      description,
-      images,
-      isEnabled,
-    });
+    const response: HotelRoom = yield call(HotelRoomsApi.create, action.payload);
     yield put(addHotelRoomSuccess(response));
   } catch (error: unknown) {
     yield put(addHotelRoomFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
+  }
+}
+
+function* updateRoomSaga(
+  action: PayloadAction<{
+    id: string;
+    hotel: string;
+    description: string;
+    images: File[];
+    isEnabled: boolean;
+  }>,
+) {
+  try {
+    const response: HotelRoom = yield call(HotelRoomsApi.update, action.payload);
+    yield put(updateHotelRoomSuccess(response));
+  } catch (error: unknown) {
+    yield put(updateHotelRoomFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
   }
 }
 
@@ -75,4 +89,5 @@ export function* hotelRoomsSaga() {
   yield takeLatest(hotelRoomsRequest, hotelRoomsDataSaga);
   yield takeLatest(hotelRoomRequest, hotelRoomDataSaga);
   yield takeLatest(addHotelRoomRequest, addHotelRoomSaga);
+  yield takeLatest(updateHotelRoomRequest, updateRoomSaga);
 }
