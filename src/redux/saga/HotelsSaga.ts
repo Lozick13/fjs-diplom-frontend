@@ -12,6 +12,7 @@ import {
   hotelsRequest,
   hotelsSuccess,
   hotelSuccess,
+  updateHotelRequest,
   type Hotel,
 } from '../slices/hotelsSlice';
 import { ApiError } from './ApiError';
@@ -48,8 +49,18 @@ function* hotelDataSaga(action: PayloadAction<string>) {
 
 function* addHotelSaga(action: PayloadAction<{ title: string; description: string }>) {
   try {
-    const { title, description } = action.payload;
-    const response: Hotel = yield call(HotelsApi.create, { title, description });
+    const response: Hotel = yield call(HotelsApi.create, action.payload);
+    yield put(addHotelSuccess(response));
+  } catch (error: unknown) {
+    yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении отеля')));
+  }
+}
+
+function* updateHotelSaga(
+  action: PayloadAction<{ id: string; title: string; description: string }>,
+) {
+  try {
+    const response: Hotel = yield call(HotelsApi.update, action.payload);
     yield put(addHotelSuccess(response));
   } catch (error: unknown) {
     yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении отеля')));
@@ -60,4 +71,5 @@ export function* hotelsSaga() {
   yield takeLatest(hotelsRequest.type, hotelsDataSaga);
   yield takeLatest(hotelRequest.type, hotelDataSaga);
   yield takeLatest(addHotelRequest.type, addHotelSaga);
+  yield takeLatest(updateHotelRequest.type, updateHotelSaga);
 }

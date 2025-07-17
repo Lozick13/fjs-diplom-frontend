@@ -8,15 +8,17 @@ import {
   addHotelRoomRequest,
   hotelRoomsRequest,
 } from '../../redux/slices/hotelRoomsSlice';
-import { hotelRequest } from '../../redux/slices/hotelsSlice';
+import { hotelRequest, updateHotelRequest } from '../../redux/slices/hotelsSlice';
 import IconButton from '../../UI/buttons/IconButton/IconButton';
 import NavigateButton from '../../UI/buttons/NavigateButton/NavigateButton';
 import AddRoomModal from '../AddRoomModal/AddRoomModal';
+import EditHotelModal from '../EditHotelModal/EditHotelModal';
 import './hotelpage.scss';
 
 const HotelPage = () => {
   const { id } = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -40,16 +42,24 @@ const HotelPage = () => {
     }
   }, [dispatch, id]);
 
-  const handleAddRoom = async (roomData: {
+  const handleAddRoom = async (data: {
     hotel: string;
     description: string;
     images: File[];
     isEnabled: boolean;
   }) => {
-    console.log('roomData', roomData);
-    await dispatch(addHotelRoomRequest(roomData));
+    await dispatch(addHotelRoomRequest(data));
     setIsModalOpen(false);
     dispatch(hotelRoomsRequest({ hotel: id, reset: true }));
+  };
+
+  const handleEditHotel = async (data: { title: string; description: string }) => {
+    if (!id) return;
+    await dispatch(
+      updateHotelRequest({ id: id, title: data.title, description: data.description }),
+    );
+    setIsEditModalOpen(false);
+    dispatch(hotelRequest(id));
   };
 
   return (
@@ -65,7 +75,14 @@ const HotelPage = () => {
         )}
         {hotel && !hotelsError && !hotelsLoading && (
           <>
-            <Title text={`Гостиница: "${hotel.title}"`} backButton />
+            <Title
+              text={`Гостиница: "${hotel.title}"`}
+              backButton
+              additionallyButton={{
+                click: () => setIsEditModalOpen(true),
+                text: 'Редактировать',
+              }}
+            />
 
             <div className="hotel__content">
               <article className="hotel__text-content">
@@ -112,6 +129,15 @@ const HotelPage = () => {
           onClose={() => !isAddingRoom && setIsModalOpen(false)}
           onSubmit={data => handleAddRoom(data)}
         />
+        {hotel && (
+          <EditHotelModal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            onSubmit={data => handleEditHotel(data)}
+            initialTitle={hotel.title}
+            initialDescription={hotel.description}
+          />
+        )}
       </main>
     </>
   );
