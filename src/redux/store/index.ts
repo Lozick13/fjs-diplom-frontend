@@ -23,18 +23,14 @@ export const saveAuthState: Middleware<object, AppState> =
       const result = next(action as never);
       if (action.type.startsWith('auth/')) {
         const authState = api.getState().auth;
-        try {
-          localStorage.setItem(
-            'authState',
-            JSON.stringify({
-              user: authState.user,
-              error: null,
-              loading: false,
-            }),
-          );
-        } catch {
-          console.error('Failed to save auth state');
-        }
+        localStorage.setItem(
+          'authState',
+          JSON.stringify({
+            user: authState.user,
+            error: null,
+            loading: false,
+          }),
+        );
       }
       return result;
     } else {

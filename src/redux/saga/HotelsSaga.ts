@@ -12,7 +12,9 @@ import {
   hotelsRequest,
   hotelsSuccess,
   hotelSuccess,
+  updateHotelFailure,
   updateHotelRequest,
+  updateHotelSuccess,
   type Hotel,
 } from '../slices/hotelsSlice';
 import { ApiError } from './ApiError';
@@ -32,27 +34,28 @@ function* hotelsDataSaga(action: PayloadAction<{ reset?: boolean; title?: string
     const response: Hotel[] = yield call(HotelsApi.search, params);
     yield put(hotelsSuccess(response));
   } catch (error: unknown) {
-    yield put(hotelsFailure(ApiError(error, 'Ошибка загрузки отелей')));
+    yield put(hotelsFailure(ApiError(error, 'Ошибка загрузки гостиниц')));
   }
 }
 
 function* hotelDataSaga(action: PayloadAction<string>) {
   try {
-    const { payload: id } = action;
     yield delay(DELAY);
+    const id = action.payload;
     const response: Hotel = yield call(HotelsApi.hotel, id);
     yield put(hotelSuccess(response));
   } catch (error: unknown) {
-    yield put(hotelFailure(ApiError(error, 'Ошибка авторизации')));
+    yield put(hotelFailure(ApiError(error, 'Ошибка загрузки гостиницы')));
   }
 }
 
 function* addHotelSaga(action: PayloadAction<{ title: string; description: string }>) {
   try {
-    const response: Hotel = yield call(HotelsApi.create, action.payload);
-    yield put(addHotelSuccess(response));
+    yield delay(DELAY);
+    yield call(HotelsApi.create, action.payload);
+    yield put(addHotelSuccess());
   } catch (error: unknown) {
-    yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении отеля')));
+    yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
   }
 }
 
@@ -60,10 +63,11 @@ function* updateHotelSaga(
   action: PayloadAction<{ id: string; title: string; description: string }>,
 ) {
   try {
-    const response: Hotel = yield call(HotelsApi.update, action.payload);
-    yield put(addHotelSuccess(response));
+    yield delay(DELAY);
+    yield call(HotelsApi.update, action.payload);
+    yield put(updateHotelSuccess());
   } catch (error: unknown) {
-    yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении отеля')));
+    yield put(updateHotelFailure(ApiError(error, 'Ошибка при обновлении гостиницы')));
   }
 }
 

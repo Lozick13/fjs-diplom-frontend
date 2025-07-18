@@ -6,19 +6,26 @@ export interface Hotel {
   description: string;
 }
 
+interface SearchParams {
+  limit: number;
+  offset: number;
+  title: string;
+}
+
 interface HotelsState {
   hotels: Hotel[];
   hotel: Hotel | null;
   loading: boolean;
   error: string | null;
+
   adding: boolean;
   addError: string | null;
+
+  updating: boolean;
+  updatingError: string | null;
+
   hasMore: boolean;
-  searchParams: {
-    limit: number;
-    offset: number;
-    title: string;
-  };
+  searchParams: SearchParams;
 }
 
 const initialState: HotelsState = {
@@ -26,8 +33,13 @@ const initialState: HotelsState = {
   hotel: null,
   loading: false,
   error: null,
+
   adding: false,
   addError: null,
+
+  updating: false,
+  updatingError: null,
+
   hasMore: true,
   searchParams: {
     limit: 10,
@@ -68,6 +80,7 @@ export const hotelSlice = createSlice({
     hotelRequest: (state, _action: PayloadAction<string>) => {
       state.loading = true;
       state.error = null;
+      state.hotel = null;
     },
     hotelSuccess: (state, action: PayloadAction<Hotel>) => {
       state.loading = false;
@@ -86,9 +99,8 @@ export const hotelSlice = createSlice({
       state.adding = true;
       state.addError = null;
     },
-    addHotelSuccess: (state, action: PayloadAction<Hotel>) => {
+    addHotelSuccess: state => {
       state.adding = false;
-      if (state.hotels) state.hotels.unshift(action.payload);
     },
     addHotelFailure: (state, action: PayloadAction<string>) => {
       state.adding = false;
@@ -104,12 +116,11 @@ export const hotelSlice = createSlice({
         description: string;
       }>,
     ) => {
-      state.adding = true;
-      state.addError = null;
+      state.updating = true;
+      state.updatingError = null;
     },
-    updateHotelSuccess: (state, action: PayloadAction<Hotel>) => {
-      state.adding = false;
-      if (state.hotels) state.hotels.unshift(action.payload);
+    updateHotelSuccess: state => {
+      state.updating = false;
     },
     updateHotelFailure: (state, action: PayloadAction<string>) => {
       state.adding = false;
