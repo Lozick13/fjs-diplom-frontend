@@ -12,7 +12,6 @@ export interface AuthState {
   error: string | null;
 }
 
-
 const loadState = (): AuthState => {
   try {
     const serializedState = localStorage.getItem('authState');
@@ -24,8 +23,7 @@ const loadState = (): AuthState => {
       };
 
     return JSON.parse(serializedState);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_error) {
+  } catch {
     return {
       user: null,
       loading: false,

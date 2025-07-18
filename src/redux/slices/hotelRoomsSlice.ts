@@ -4,6 +4,7 @@ export interface HotelRoom {
   id: string;
   description: string;
   images: string[];
+  isEnabled: boolean;
   hotel: {
     id: string;
     title: string;
@@ -11,20 +12,27 @@ export interface HotelRoom {
   };
 }
 
+interface SearchParams {
+  limit: number;
+  offset: number;
+  hotel: string;
+  isEnabled: boolean;
+}
+
 export interface HotelRoomState {
   hotelRooms: HotelRoom[];
   hotelRoom: HotelRoom | null;
   loading: boolean;
   error: string | null;
+
   adding: boolean;
   addError: string | null;
+
+  updating: boolean;
+  updatingError: string | null;
+
   hasMore: boolean;
-  searchParams: {
-    limit: number;
-    offset: number;
-    hotel: string;
-    isEnabled: boolean;
-  };
+  searchParams: SearchParams;
 }
 
 const initialState: HotelRoomState = {
@@ -32,8 +40,13 @@ const initialState: HotelRoomState = {
   hotelRoom: null,
   loading: false,
   error: null,
+
   adding: false,
   addError: null,
+
+  updating: false,
+  updatingError: null,
+
   hasMore: true,
   searchParams: {
     limit: 10,
@@ -75,6 +88,7 @@ export const hotelRoomsSlice = createSlice({
     hotelRoomRequest: (state, _action: PayloadAction<string>) => {
       state.loading = true;
       state.error = null;
+      state.hotelRoom = null;
     },
     hotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
       state.loading = false;
@@ -98,9 +112,8 @@ export const hotelRoomsSlice = createSlice({
       state.adding = true;
       state.addError = null;
     },
-    addHotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
+    addHotelRoomSuccess: state => {
       state.adding = false;
-      if (state.hotelRooms) state.hotelRooms.unshift(action.payload);
     },
     addHotelRoomFailure: (state, action: PayloadAction<string>) => {
       state.adding = false;
@@ -121,9 +134,8 @@ export const hotelRoomsSlice = createSlice({
       state.adding = true;
       state.addError = null;
     },
-    updateHotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
+    updateHotelRoomSuccess: state => {
       state.adding = false;
-      if (state.hotelRooms) state.hotelRooms.unshift(action.payload);
     },
     updateHotelRoomFailure: (state, action: PayloadAction<string>) => {
       state.adding = false;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import LogoLoader from '../../components/LogoLoader/LogoLoader';
 import Slider from '../../components/Slider/Slider';
 import Title from '../../components/Title/Title';
@@ -9,19 +9,23 @@ import {
   hotelRoomRequest,
   updateHotelRoomRequest,
 } from '../../redux/slices/hotelRoomsSlice';
-import NavigateButton from '../../UI/buttons/NavigateButton/NavigateButton';
 import './hotelroompage.scss';
 
 const HotelRoomPage = () => {
-  const { id } = useParams<{ id: string }>();
+  // hooks
   const dispatch = useAppDispatch();
   const { loading, error, hotelRoom } = useAppSelector(state => state.hotelRooms);
+  const { id } = useParams<{ id: string }>();
+
+  // states
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  //loading room
   useEffect(() => {
     if (id) dispatch(hotelRoomRequest(id));
   }, [dispatch, id]);
 
+  //save changes
   const handleEditRoom = async (data: {
     hotel: string;
     description: string;
@@ -29,6 +33,7 @@ const HotelRoomPage = () => {
     isEnabled: boolean;
   }) => {
     if (!id || !hotelRoom?.hotel) return;
+
     await dispatch(
       updateHotelRoomRequest({
         id: id,
@@ -42,29 +47,26 @@ const HotelRoomPage = () => {
     dispatch(hotelRoomRequest(id));
   };
 
-  const navigate = useNavigate();
-
   return (
     <>
       <main className="hotel-room">
-        {loading && <LogoLoader started />}
-        {error && (
-          <>
-            <NavigateButton click={() => navigate(-1)} text={'← Назад'} />
-            <p>{error}</p>
-          </>
-        )}
-        {hotelRoom && !error && !loading && (
-          <>
-            <Title
-              text={`Комната гостиницы: "${hotelRoom.hotel.title}"`}
-              backButton
-              additionallyButton={{
-                click: () => setIsEditModalOpen(true),
-                text: 'Редактировать',
-              }}
-            />
+        <Title
+          text={`Комната гостиницы:\n${
+            hotelRoom?.hotel?.title
+              ? `"${hotelRoom.hotel.title}"`
+              : error
+              ? 'ГОСТИНИЦА НЕ НАЙДЕНА'
+              : '...'
+          }`}
+          backButton
+          additionallyButton={{
+            click: () => setIsEditModalOpen(true),
+            text: 'Редактировать',
+          }}
+        />
 
+        {hotelRoom  && (
+          <>
             <div className="hotel-room__content">
               <Slider images={hotelRoom.images} alt={hotelRoom.hotel.title} />
 
@@ -81,7 +83,14 @@ const HotelRoomPage = () => {
               </article>
             </div>
           </>
-        )}{' '}
+        )}
+        {loading && <LogoLoader started />}
+        {error && (
+          <>
+            <p>{error}</p>
+          </>
+        )}
+
         <AddRoomModal
           hotelId={hotelRoom?.hotel.id || ''}
           isOpen={isEditModalOpen}

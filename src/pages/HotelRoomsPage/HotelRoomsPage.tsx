@@ -8,10 +8,13 @@ import BaseButton from '../../UI/buttons/BaseButton/BaseButton';
 import './hotelroomspage.scss';
 
 const HotelRoomsPage = () => {
+  // hooks
   const dispatch = useAppDispatch();
   const { loading, error, hotelRooms, hasMore } = useAppSelector(
     state => state.hotelRooms,
   );
+
+  //loading rooms
   const loadHotelRooms = useCallback(
     (reset = false) => {
       dispatch(
@@ -22,11 +25,11 @@ const HotelRoomsPage = () => {
     },
     [dispatch],
   );
-
   useEffect(() => {
     loadHotelRooms(true);
   }, [loadHotelRooms]);
 
+  //search for additional rooms
   const handleLoadMore = useCallback(() => {
     if (!loading && hasMore) {
       loadHotelRooms();
@@ -49,12 +52,17 @@ const HotelRoomsPage = () => {
             ))
           ) : (
             <p>Нет доступных комнат</p>
-          )}{' '}
-          {loading && <LogoLoader started />}
-          {error && <p>error</p>}
-        </section>{' '}
-        {hasMore && !loading && hotelRooms.length > 0 && (
-          <BaseButton text="Показать еще" click={handleLoadMore} type="button" />
+          )}
+        </section>
+        {error && <p>{error}</p>}
+        {hasMore && hotelRooms.length > 0 && (
+          <>
+            {!loading ? (
+              <BaseButton text={'Показать еще'} click={handleLoadMore} type="button" />
+            ) : (
+              loading && <LogoLoader started />
+            )}
+          </>
         )}
       </main>
     </>

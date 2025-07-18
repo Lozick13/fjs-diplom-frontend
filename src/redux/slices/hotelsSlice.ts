@@ -42,7 +42,7 @@ const initialState: HotelsState = {
 
   hasMore: true,
   searchParams: {
-    limit: 10,
+    limit: 2,
     offset: 0,
     title: '',
   },

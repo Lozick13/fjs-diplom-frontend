@@ -8,11 +8,15 @@ import type { InputBase } from '../../UI/Inputs/Input';
 import './addhotelspage.scss';
 
 const AddHotelPage = () => {
-  const dispatch = useAppDispatch();
+  // hooks
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  // states
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
+  //inputs
   const inputs: InputBase[] = [
     {
       label: 'Название',
@@ -40,21 +44,12 @@ const AddHotelPage = () => {
     },
   ];
 
+  //adding a hotel
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!title.trim() || !description.trim()) {
-      return;
-    }
-
-    try {
-      await dispatch(addHotelRequest({ title, description }));
-      navigate('/hotels');
-    } catch (error) {
-      console.error('Ошибка при добавлении отеля:', error);
-    }
+    await dispatch(addHotelRequest({ title, description }));
+    navigate('/hotels');
   };
-
   return (
     <>
       <main className="add-hotel">

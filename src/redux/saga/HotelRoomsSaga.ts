@@ -37,18 +37,18 @@ function* hotelRoomsDataSaga(
     const response: HotelRoom[] = yield call(HotelRoomsApi.hotelRooms, params);
     yield put(hotelRoomsSuccess(response));
   } catch (error: unknown) {
-    yield put(hotelRoomsFailure(ApiError(error, 'Ошибка авторизации')));
+    yield put(hotelRoomsFailure(ApiError(error, 'Ошибка загрузки комнаты')));
   }
 }
 
 function* hotelRoomDataSaga(action: PayloadAction<string>) {
   try {
-    const { payload: id } = action;
     yield delay(DELAY);
+    const id = action.payload;
     const response: HotelRoom = yield call(HotelRoomsApi.hotelRoom, id);
     yield put(hotelRoomSuccess(response));
   } catch (error: unknown) {
-    yield put(hotelRoomFailure(ApiError(error, 'Ошибка авторизации')));
+    yield put(hotelRoomFailure(ApiError(error, 'Ошибка загрузки комнаты')));
   }
 }
 
@@ -61,10 +61,11 @@ function* addHotelRoomSaga(
   }>,
 ) {
   try {
-    const response: HotelRoom = yield call(HotelRoomsApi.create, action.payload);
-    yield put(addHotelRoomSuccess(response));
+    yield delay(DELAY);
+    yield call(HotelRoomsApi.create, action.payload);
+    yield put(addHotelRoomSuccess());
   } catch (error: unknown) {
-    yield put(addHotelRoomFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
+    yield put(addHotelRoomFailure(ApiError(error, 'Ошибка при добавлении комнаты')));
   }
 }
 
@@ -78,10 +79,10 @@ function* updateRoomSaga(
   }>,
 ) {
   try {
-    const response: HotelRoom = yield call(HotelRoomsApi.update, action.payload);
-    yield put(updateHotelRoomSuccess(response));
+    yield call(HotelRoomsApi.update, action.payload);
+    yield put(updateHotelRoomSuccess());
   } catch (error: unknown) {
-    yield put(updateHotelRoomFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
+    yield put(updateHotelRoomFailure(ApiError(error, 'Ошибка при обновлении комнаты')));
   }
 }
 

@@ -52,7 +52,7 @@ export const HotelRoomsApi = {
     data.images.forEach(file => {
       formData.append('images', file);
     });
-console.log('formData',formData)
+    
     const response = await api.put(`/admin/hotel-rooms/${data.id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

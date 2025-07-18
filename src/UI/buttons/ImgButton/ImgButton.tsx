@@ -1,4 +1,3 @@
-
 import type { ButtonImg } from '../Button';
 import './imgbutton.scss';
 

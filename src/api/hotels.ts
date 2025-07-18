@@ -12,7 +12,6 @@ export const HotelsApi = {
     return response.data;
   },
   hotel: async (id: string) => {
-    console.log('id', id);
     const response = await api.get(`/admin/hotels/${id}`);
     return response.data;
   },

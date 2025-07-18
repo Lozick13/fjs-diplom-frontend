@@ -1,28 +1,28 @@
 .modal-overlay {
+  display: flex;
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  left: 0;
   justify-content: center;
   align-items: center;
   z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
-  background: white;
   border-radius: 8px;
+  background: white;
   width: 100%;
   max-width: 500px;
 
   &__header {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 20px;
   }
 
   &__content {

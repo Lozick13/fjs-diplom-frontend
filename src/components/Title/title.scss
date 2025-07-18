@@ -2,10 +2,13 @@
   display: flex;
   position: relative;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   font-weight: 700;
   font-size: 36px;
+  text-align: center;
+
+  white-space: pre-line;
 
   &__back {
     position: absolute;
