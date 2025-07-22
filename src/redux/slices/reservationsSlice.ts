@@ -42,7 +42,6 @@ export const reservationsSlice = createSlice({
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     reservationsRequest: (state, _action: PayloadAction<{ id: string }>) => {
-      console.log('1',1)
       state.loading = true;
       state.error = null;
       state.reservations = [];

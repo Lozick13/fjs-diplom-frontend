@@ -4,6 +4,7 @@ interface User {
   id: string;
   email: string;
   name: string;
+  role: string;
   contactPhone?: string;
 }
 
@@ -15,7 +16,7 @@ export interface AuthState {
 
 const loadState = (): AuthState => {
   try {
-    const serializedState = localStorage.getItem('authState');
+    const serializedState = localStorage.getItem('auth');
     if (serializedState === null)
       return {
         user: null,
@@ -25,7 +26,7 @@ const loadState = (): AuthState => {
 
     return JSON.parse(serializedState);
   } catch {
-    return {  user: null, loading: false, error: null };
+    return { user: null, loading: false, error: null };
   }
 };
 
@@ -56,13 +57,12 @@ export const authSlice = createSlice({
       state.loading = true;
     },
     logoutSuccess: state => {
-      state.loading = false;
       state.user = null;
-    },
-    logoutFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = null;
     },
+
+    checkSession: () => {},
 
     registerRequest: (
       state,
@@ -94,7 +94,7 @@ export const {
   loginFailure,
   logoutRequest,
   logoutSuccess,
-  logoutFailure,
+  checkSession,
   registerRequest,
   registerSuccess,
   registerFailure,

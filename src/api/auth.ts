@@ -18,5 +18,6 @@ export const AuthApi = {
     return response.data;
   },
   logout: () => api.post('/auth/logout'),
+  checkSession: () => api.get('/auth/check-session'),
   register: (data: RegisterData) => api.post('/client/register', data),
 };

@@ -6,7 +6,6 @@ export const ReservationsApi = {
   },
   getClientReservations: async (userId: string) => {
     const response = await api.get(`/client/reservations?userId=${userId}`);
-    console.log('response', response);
     return response.data;
   },
   deleteReservation: async (id: string) => {

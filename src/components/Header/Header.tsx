@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutRequest } from '../../redux/slices/authSlice';
 import ImgButton from '../../UI/buttons/ImgButton/ImgButton';
 import './header.scss';
@@ -7,6 +7,7 @@ import './header.scss';
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector(state => state.auth);
 
   return (
     <>
@@ -16,36 +17,52 @@ const Header = () => {
           <h1 className="header__title">HoneyHotels</h1>
         </div>
         <nav className="header__nav">
+          {user?.role === 'admin' && (
+            <ImgButton
+              click={() => navigate('/hotels')}
+              color="#D68D17"
+              img="/assets/hotel.svg"
+            />
+          )}
           <ImgButton
-            click={() => navigate('/users')}
+            click={() => navigate('/hotel-rooms')}
             color="#D68D17"
-            img="/assets/users.svg"
-          />{' '}
+            img="/assets/room.svg"
+          />
+          {user?.role === 'client' && (
+            <ImgButton
+              click={() => navigate('/reservations')}
+              color="#D68D17"
+              img="/assets/reservation.svg"
+            />
+          )}
           <ImgButton
             click={() => navigate('/support')}
             color="#D68D17"
             img="/assets/chats.svg"
           />
           <ImgButton
-            click={() => navigate('/reservations')}
+            click={() => navigate('/users')}
             color="#D68D17"
-            img="/assets/reservation.svg"
+            img="/assets/users.svg"
           />
-          <ImgButton
-            click={() => navigate('/hotels')}
-            color="#D68D17"
-            img="/assets/hotel.svg"
-          />
-          <ImgButton
-            click={() => navigate('/hotel-rooms')}
-            color="#D68D17"
-            img="/assets/room.svg"
-          />
-          <ImgButton
-            click={async () => dispatch(logoutRequest())}
-            color="#D68D17"
-            img="/assets/log-out.svg"
-          />
+          {user ? (
+            <ImgButton
+              click={async () => {
+                dispatch(logoutRequest());
+              }}
+              color="#D68D17"
+              img="/assets/log-out.svg"
+            />
+          ) : (
+            <ImgButton
+              click={async () => {
+                navigate('/auth');
+              }}
+              color="#D68D17"
+              img="/assets/log-in.svg"
+            />
+          )}
         </nav>
       </header>
     </>

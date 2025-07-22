@@ -55,14 +55,9 @@ const HotelRoomsPage = () => {
           )}
         </section>
         {error && <p>{error}</p>}
+        {loading && <LogoLoader started />}
         {hasMore && hotelRooms.length > 0 && (
-          <>
-            {!loading ? (
-              <BaseButton text={'Показать еще'} click={handleLoadMore} type="button" />
-            ) : (
-              loading && <LogoLoader started />
-            )}
-          </>
+          <BaseButton text={'Показать еще'} click={handleLoadMore} type="button" />
         )}
       </main>
     </>

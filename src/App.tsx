@@ -13,20 +13,20 @@ import SignUpPage from './pages/SugnUpPage/SignUpPage';
 function App() {
   const location = useLocation();
   const { user } = useAppSelector(state => state.auth);
+
   const requireAuth = (children: React.ReactNode) => {
-    return user !== null ? children : <Navigate to="/auth" replace />;
+    return user !== null ? children : <Navigate to="/hotel-rooms" replace />;
   };
   return (
     <>
       {!['/auth', '/signup'].includes(location.pathname) && <Header />}
 
       <Routes>
-        <Route path="/" element={<Navigate to="/hotel-rooms" replace />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/hotel-rooms" element={requireAuth(<HotelRoomsPage />)} />
+        <Route path="/hotel-rooms" element={<HotelRoomsPage />} />{' '}
+        <Route path="/hotel-rooms/:id" element={<HotelRoomPage />} />
         <Route path="/reservations" element={requireAuth(<ReservationsPage />)} />
-        <Route path="/hotel-rooms/:id" element={requireAuth(<HotelRoomPage />)} />
         <Route path="/hotels/:id" element={requireAuth(<HotelPage />)} />
         <Route path="/hotels/create" element={requireAuth(<AddHotelPage />)} />
         <Route path="/hotels" element={requireAuth(<HotelsPage />)} />

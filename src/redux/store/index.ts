@@ -25,11 +25,9 @@ export const saveAuthState: Middleware<object, AppState> =
       if (action.type.startsWith('auth/')) {
         const authState = api.getState().auth;
         localStorage.setItem(
-          'authState',
+          'auth',
           JSON.stringify({
             user: authState.user,
-            error: null,
-            loading: false,
           }),
         );
       }
