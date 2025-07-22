@@ -27,6 +27,11 @@ const Header = () => {
             img="/assets/chats.svg"
           />
           <ImgButton
+            click={() => navigate('/reservations')}
+            color="#D68D17"
+            img="/assets/reservation.svg"
+          />
+          <ImgButton
             click={() => navigate('/hotels')}
             color="#D68D17"
             img="/assets/hotel.svg"

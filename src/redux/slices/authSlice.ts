@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface User {
+  id: string;
   email: string;
   name: string;
   contactPhone?: string;
@@ -24,11 +25,7 @@ const loadState = (): AuthState => {
 
     return JSON.parse(serializedState);
   } catch {
-    return {
-      user: null,
-      loading: false,
-      error: null,
-    };
+    return {  user: null, loading: false, error: null };
   }
 };
 

@@ -7,6 +7,7 @@ import HotelPage from './pages/HotelPage/HotelPage';
 import HotelRoomPage from './pages/HotelRoomPage/HotelRoomPage';
 import HotelRoomsPage from './pages/HotelRoomsPage/HotelRoomsPage';
 import HotelsPage from './pages/HotelsPage/HotelsPage';
+import ReservationsPage from './pages/ReservationsPage/ReservationsPage';
 import SignUpPage from './pages/SugnUpPage/SignUpPage';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/hotel-rooms" element={requireAuth(<HotelRoomsPage />)} />
+        <Route path="/reservations" element={requireAuth(<ReservationsPage />)} />
         <Route path="/hotel-rooms/:id" element={requireAuth(<HotelRoomPage />)} />
         <Route path="/hotels/:id" element={requireAuth(<HotelPage />)} />
         <Route path="/hotels/create" element={requireAuth(<AddHotelPage />)} />

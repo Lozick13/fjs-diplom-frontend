@@ -25,7 +25,6 @@ const Slider: React.FC<props> = ({ images, alt }) => {
             alt={alt + '_' + [currentImageIndex]}
             key={currentImageIndex}
           />
-          )
           {images.length > 1 && (
             <>
               <button

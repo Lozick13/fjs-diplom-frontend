@@ -5,6 +5,7 @@ import authReducer, { type AuthState } from '../slices/authSlice';
 import type { HotelRoomState } from '../slices/hotelRoomsSlice';
 import hotelRoomsReducer from '../slices/hotelRoomsSlice';
 import hotelReducer, { type HotelsState } from '../slices/hotelsSlice';
+import reservationsReducer from '../slices/reservationsSlice';
 
 type AppState = {
   auth: AuthState;
@@ -41,7 +42,12 @@ export const saveAuthState: Middleware<object, AppState> =
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   devTools: true,
-  reducer: { auth: authReducer, hotels: hotelReducer, hotelRooms: hotelRoomsReducer },
+  reducer: {
+    auth: authReducer,
+    hotels: hotelReducer,
+    hotelRooms: hotelRoomsReducer,
+    reservations: reservationsReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, saveAuthState),
 });

@@ -12,7 +12,7 @@ interface SearchParams {
   title: string;
 }
 
-interface HotelsState {
+export interface HotelsState {
   hotels: Hotel[];
   hotel: Hotel | null;
   loading: boolean;

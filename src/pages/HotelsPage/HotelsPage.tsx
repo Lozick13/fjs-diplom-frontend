@@ -86,8 +86,8 @@ const HotelsPage = () => {
         ) : (
           <p>Нет доступных отелей</p>
         )}
-        {loading && hotels.length === 0 && <LogoLoader started />}
-        {error && hotels.length === 0 && <p>{error}</p>}
+        {loading && <LogoLoader started />}
+        {error && <p>{error}</p>}
       </section>
 
       {hasMore && hotels.length > 0 && (
