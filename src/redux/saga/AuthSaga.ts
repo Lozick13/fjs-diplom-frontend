@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { call, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, fork, put, select, takeLatest } from 'redux-saga/effects';
 import { DELAY } from '.';
 import { AuthApi } from '../../api/auth';
 import {
@@ -38,20 +38,20 @@ function* loginSaga(action: PayloadAction<{ email: string; password: string }>) 
 function* logoutSaga() {
   try {
     yield call(AuthApi.logout);
-  } catch {
+  } finally {
     localStorage.removeItem('auth');
     document.cookie = 'connect.sid=;';
-  } finally {
     yield put(logoutSuccess());
   }
 }
 
 function* checkSessionSaga() {
   try {
+    const { user } = yield select(state => state.auth);
+    if (!user) throw new Error();
+
     yield call(AuthApi.checkSession);
   } catch {
-    localStorage.removeItem('auth');
-    document.cookie = 'connect.sid=;';
     yield put(logoutSuccess());
   }
 }

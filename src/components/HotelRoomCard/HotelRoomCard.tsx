@@ -24,7 +24,10 @@ const HotelRoomCard: React.FC<props> = ({ id, description, images, hotel }) => {
           <br />"{hotel.title}"
         </h2>
 
-        <Slider images={images} alt={hotel.title} />
+        <div className="hotel-room-card__slider">
+          <Slider images={images} alt={hotel.title} />
+        </div>
+
         <p className="hotel-room-card__description">{description}</p>
         <BaseButton text="Перейти" click={() => navigate(`/hotel-rooms/${id}`)} />
       </article>
