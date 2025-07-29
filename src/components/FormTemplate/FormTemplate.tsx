@@ -35,6 +35,7 @@ const FormTemplate: React.FC<Form> = ({
             name={input.name}
             value={input.value}
             type={input.type}
+            options={input.options}
             change={input.change}
             min={input.min}
             placeholder={input.placeholder}

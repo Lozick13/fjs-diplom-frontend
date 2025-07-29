@@ -52,8 +52,9 @@ const SignUpPage = () => {
       name: 'name',
       value: name,
       type: 'text',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setName(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setName(e.target.value),
       placeholder: 'Ваше Имя',
       required: true,
     },
@@ -63,8 +64,9 @@ const SignUpPage = () => {
       name: 'email',
       value: email,
       type: 'email',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setEmail(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setEmail(e.target.value),
       placeholder: 'Ваш Email',
       required: true,
     },
@@ -74,8 +76,9 @@ const SignUpPage = () => {
       name: 'phone',
       value: phone,
       type: 'tel',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setPhone(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setPhone(e.target.value),
       placeholder: 'Ваш телефон',
       required: false,
     },
@@ -85,8 +88,9 @@ const SignUpPage = () => {
       name: 'password',
       value: password,
       type: 'password',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setPassword(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setPassword(e.target.value),
       min: 6,
       placeholder: 'Ваш пароль',
       required: true,

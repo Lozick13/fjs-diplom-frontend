@@ -1,4 +1,4 @@
-import type { InputBase } from '../Input';
+import type { InputBase, InputOption } from '../Input';
 import './baseinput.scss';
 
 const BaseInput = ({
@@ -13,6 +13,7 @@ const BaseInput = ({
   required,
   accept,
   disabled,
+  options,
   multiple,
   multiline = false,
   rows = 3,
@@ -25,7 +26,24 @@ const BaseInput = ({
           {label}
         </label>
       )}
-      {multiline ? (
+      {type === 'select' ? (
+        <select
+          id={id}
+          name={name}
+          value={value as string | number}
+          onChange={change}
+          disabled={disabled}
+          required={required}
+          multiple={multiple}
+          className="base-input__place base-input__select"
+        >
+          {options?.map((option: InputOption) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : multiline ? (
         <textarea
           id={id}
           name={name}

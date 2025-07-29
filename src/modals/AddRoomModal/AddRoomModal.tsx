@@ -40,7 +40,9 @@ const AddRoomModal = ({ hotelId, isOpen, onClose, onSubmit }: AddRoomModalProps)
     },
     {
       type: 'file',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => {
         if (e.target instanceof HTMLInputElement) {
           if (e.target.files && e.target.files.length > 0) {
             const newImages = Array.from(e.target.files);

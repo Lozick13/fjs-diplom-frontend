@@ -40,8 +40,9 @@ const AuthPage = () => {
       name: 'email',
       value: email,
       type: 'email',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setEmail(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setEmail(e.target.value),
       placeholder: 'Ваш Email',
       required: true,
     },
@@ -51,8 +52,9 @@ const AuthPage = () => {
       name: 'password',
       value: password,
       type: 'password',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setPassword(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setPassword(e.target.value),
       min: 6,
       placeholder: 'Ваш пароль',
       required: true,

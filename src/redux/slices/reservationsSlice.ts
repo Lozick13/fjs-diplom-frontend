@@ -14,7 +14,7 @@ export interface Reservation {
   };
 }
 
-interface ReservationsState {
+export interface ReservationsState {
   reservations: Reservation[];
   loading: boolean;
   error: string | null;

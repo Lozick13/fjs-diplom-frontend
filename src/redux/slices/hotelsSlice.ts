@@ -9,7 +9,6 @@ export interface Hotel {
 interface SearchParams {
   limit: number;
   offset: number;
-  title: string;
 }
 
 export interface HotelsState {
@@ -44,7 +43,6 @@ const initialState: HotelsState = {
   searchParams: {
     limit: 2,
     offset: 0,
-    title: '',
   },
 };
 

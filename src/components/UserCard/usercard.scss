@@ -1,0 +1,56 @@
+.user-card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: #fff;
+
+  padding: 30px;
+
+  width: 100%;
+  max-width: 450px;
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 30px;
+    word-break: break-word;
+  }
+
+  &__id {
+    font-weight: 200;
+    font-size: 16px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  &__item {
+    font-size: 16px;
+  }
+
+  &__role {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 12px;
+    padding: 5px 10px;
+    color: #fff;
+    font-weight: 600;
+
+    &_admin {
+      background-color: #fd5050;
+    }
+    &_manager {
+      background-color: #fdb250;
+    }
+    &_client {
+      background-color: #50c9fd;
+    }
+  }
+}

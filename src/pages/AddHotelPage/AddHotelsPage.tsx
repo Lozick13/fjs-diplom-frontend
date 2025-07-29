@@ -24,8 +24,9 @@ const AddHotelPage = () => {
       name: 'title',
       value: title,
       type: 'text',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setTitle(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setTitle(e.target.value),
       placeholder: 'Ваше название гостиницы',
       required: true,
     },
@@ -35,8 +36,9 @@ const AddHotelPage = () => {
       name: 'description',
       value: description,
       type: 'text',
-      change: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        setDescription(e.target.value),
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setDescription(e.target.value),
       placeholder: 'Ваше описание гостиницы',
       required: true,
       multiline: true,

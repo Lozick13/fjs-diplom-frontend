@@ -5,12 +5,15 @@ import authReducer, { type AuthState } from '../slices/authSlice';
 import type { HotelRoomState } from '../slices/hotelRoomsSlice';
 import hotelRoomsReducer from '../slices/hotelRoomsSlice';
 import hotelReducer, { type HotelsState } from '../slices/hotelsSlice';
-import reservationsReducer from '../slices/reservationsSlice';
+import reservationsReducer, { type ReservationsState } from '../slices/reservationsSlice';
+import usersReducer, { type UsersState } from '../slices/usersSlice';
 
 type AppState = {
   auth: AuthState;
   hotels: HotelsState;
   hotelRooms: HotelRoomState;
+  reservations: ReservationsState;
+  users: UsersState;
 };
 
 export const saveAuthState: Middleware<object, AppState> =
@@ -45,6 +48,7 @@ const store = configureStore({
     hotels: hotelReducer,
     hotelRooms: hotelRoomsReducer,
     reservations: reservationsReducer,
+    users: usersReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, saveAuthState),

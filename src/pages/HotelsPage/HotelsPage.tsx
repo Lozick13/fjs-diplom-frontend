@@ -86,19 +86,13 @@ const HotelsPage = () => {
         ) : (
           <p>Нет доступных отелей</p>
         )}
-        {loading && <LogoLoader started />}
-        {error && <p>{error}</p>}
       </section>
 
-      {hasMore && hotels.length > 0 && (
-        <>
-          {!loading ? (
-            <BaseButton text={'Показать еще'} click={handleLoadMore} type="button" />
-          ) : (
-            loading && <LogoLoader started />
-          )}
-        </>
-      )}
+     {error && <p>{error}</p>}
+        {loading && <LogoLoader started />}
+        {hasMore && hotels.length > 0 && (
+          <BaseButton text={'Показать еще'} click={handleLoadMore} type="button" />
+        )}
     </main>
   );
 };
