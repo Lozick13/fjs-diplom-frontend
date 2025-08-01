@@ -33,3 +33,31 @@
     resize: none;
   }
 }
+
+.file-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__hidden {
+    display: none;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: 0.5s;
+    cursor: pointer;
+    border: solid 1px #000;
+    border-radius: 15px;
+    background: #fff;
+    padding: 10px;
+    font-size: 20px;
+
+    &:hover {
+      filter: brightness(95%);
+    }
+  }
+}

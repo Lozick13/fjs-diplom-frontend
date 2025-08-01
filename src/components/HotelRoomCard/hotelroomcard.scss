@@ -9,13 +9,15 @@
   max-width: 345px;
   &__title {
     font-size: 28px;
+    word-break: break-word;
   }
 
-&__slider{
-  height: 160px;
-}
+  &__slider {
+    height: 160px;
+  }
 
   &__description {
     font-size: 16px;
+    word-break: break-word;
   }
 }

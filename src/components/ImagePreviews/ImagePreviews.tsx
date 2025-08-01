@@ -1,44 +1,35 @@
-import IconButton from '../../UI/buttons/IconButton/IconButton';
+import React from 'react';
+import ImagePreview from '../ImagePreview/ImagePreview';
 import './imagepreviews.scss';
 
 interface ImagePreviewsProps {
-  images: File[];
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
   previews: string[];
-  setPreviews: React.Dispatch<React.SetStateAction<string[]>>;
+  onRemove: (index: number) => void;
+  onClick: (url: string) => void;
+  moveImage: (dragIndex: number, hoverIndex: number) => void;
 }
 
-const ImagePreviews = ({
-  images,
-  setImages,
+const ImagePreviews: React.FC<ImagePreviewsProps> = ({
   previews,
-  setPreviews,
-}: ImagePreviewsProps) => {
-  const removeImage = (index: number) => {
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    setImages(newImages);
-
-    const newPreviews = [...previews];
-    URL.revokeObjectURL(newPreviews[index]);
-    newPreviews.splice(index, 1);
-    setPreviews(newPreviews);
-  };
+  onRemove,
+  onClick,
+  moveImage,
+}) => {
   return (
-    <section className="image-previews">
-      <h4>Загруженные изображения:</h4>
-
+    <div className="image-previews">
       <div className="image-previews__container">
         {previews.map((preview, index) => (
-          <article key={index} className="image-previews__preview">
-            <img src={preview} alt={`Preview ${index}`} />
-            <div className="image-previews__remove">
-              <IconButton icon="delete" type="button" click={() => removeImage(index)} />
-            </div>
-          </article>
+          <ImagePreview
+            key={preview}
+            preview={preview}
+            index={index}
+            onRemove={onRemove}
+            onClick={onClick}
+            moveImage={moveImage}
+          />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

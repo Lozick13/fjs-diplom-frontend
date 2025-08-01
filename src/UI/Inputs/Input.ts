@@ -35,6 +35,7 @@ export interface InputBase {
   label?: string;
   multiline?: boolean;
   rows?: number;
+  fileInput?: boolean;
   accept?: string;
   options?: InputOption[];
   multiple?: boolean;

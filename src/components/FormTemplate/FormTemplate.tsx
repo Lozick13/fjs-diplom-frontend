@@ -37,6 +37,7 @@ const FormTemplate: React.FC<Form> = ({
             type={input.type}
             options={input.options}
             change={input.change}
+            fileInput={input.fileInput}
             min={input.min}
             placeholder={input.placeholder}
             required={input.required}

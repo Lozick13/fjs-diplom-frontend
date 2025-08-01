@@ -15,7 +15,8 @@
   border-radius: 8px;
   background: white;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
+  max-height: 90%;
 
   &__header {
     display: flex;
@@ -26,6 +27,9 @@
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     padding: 20px;
   }
 }

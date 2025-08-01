@@ -56,13 +56,14 @@ function* addHotelRoomSaga(
   action: PayloadAction<{
     hotel: string;
     description: string;
-    images: File[];
+    images: Array<string | File>;
     isEnabled: boolean;
   }>,
 ) {
   try {
     yield delay(DELAY);
     yield call(HotelRoomsApi.create, action.payload);
+    yield put(hotelRoomsRequest({ hotel: action.payload.hotel, reset: true }));
     yield put(addHotelRoomSuccess());
   } catch (error: unknown) {
     yield put(addHotelRoomFailure(ApiError(error, 'Ошибка при добавлении комнаты')));
@@ -74,12 +75,13 @@ function* updateRoomSaga(
     id: string;
     hotel: string;
     description: string;
-    images: File[];
+    images: Array<string | File>;
     isEnabled: boolean;
   }>,
 ) {
   try {
     yield call(HotelRoomsApi.update, action.payload);
+    yield put(hotelRoomRequest(action.payload.id));
     yield put(updateHotelRoomSuccess());
   } catch (error: unknown) {
     yield put(updateHotelRoomFailure(ApiError(error, 'Ошибка при обновлении комнаты')));

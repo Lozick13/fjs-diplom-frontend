@@ -49,25 +49,23 @@ const HotelPage = () => {
   const handleAddRoom = async (data: {
     hotel: string;
     description: string;
-    images: File[];
+    images: Array<string | File>;
     isEnabled: boolean;
   }) => {
     if (!id) return;
 
     await dispatch(addHotelRoomRequest(data));
     setIsModalOpen(false);
-    dispatch(hotelRoomsRequest({ hotel: id, reset: true }));
   };
 
   //hotel editing
   const handleEditHotel = async (data: { title: string; description: string }) => {
     if (!id) return;
-
     await dispatch(
       updateHotelRequest({ id: id, title: data.title, description: data.description }),
     );
+    await dispatch(hotelRoomsRequest({ hotel: id, reset: true }));
     setIsEditModalOpen(false);
-    dispatch(hotelRequest(id));
   };
 
   return (
@@ -138,12 +136,17 @@ const HotelPage = () => {
           </>
         )}
 
-        <AddRoomModal
-          hotelId={id || ''}
-          isOpen={isModalOpen}
-          onClose={() => !isAddingRoom && setIsModalOpen(false)}
-          onSubmit={data => handleAddRoom(data)}
-        />
+        {id && (
+          <AddRoomModal
+            hotelId={id}
+            initialDescription={''}
+            images={[]}
+            initialIsEnabled={true}
+            isOpen={isModalOpen}
+            onClose={() => !isAddingRoom && setIsModalOpen(false)}
+            onSubmit={data => handleAddRoom(data)}
+          />
+        )}
 
         {hotel && (
           <EditHotelModal

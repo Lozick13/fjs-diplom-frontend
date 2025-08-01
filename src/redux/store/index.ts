@@ -51,7 +51,16 @@ const store = configureStore({
     users: usersReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware, saveAuthState),
+    getDefaultMiddleware({
+      thunk: false,
+      serializableCheck: {
+        ignoredActions: [
+          'hotelRooms/updateHotelRoomRequest',
+          'hotelRooms/addHotelRoomRequest',
+        ],
+        ignoredPaths: ['payload.images'],
+      },
+    }).concat(sagaMiddleware, saveAuthState),
 });
 
 sagaMiddleware.run(saga);

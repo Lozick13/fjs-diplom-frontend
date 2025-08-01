@@ -105,7 +105,7 @@ export const hotelRoomsSlice = createSlice({
       _action: PayloadAction<{
         hotel: string;
         description: string;
-        images: File[];
+        images: Array<string | File>;
         isEnabled: boolean;
       }>,
     ) => {
@@ -127,7 +127,7 @@ export const hotelRoomsSlice = createSlice({
         id: string;
         hotel: string;
         description: string;
-        images: File[];
+        images: Array<string | File>;
         isEnabled: boolean;
       }>,
     ) => {

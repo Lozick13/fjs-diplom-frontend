@@ -1,0 +1,40 @@
+.image-preview {
+  position: relative;
+  flex-shrink: 0;
+  transition: 0.3s;
+  cursor: pointer;
+  border: 1px solid #000;
+  height: 120px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 180px;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &:hover &__action {
+    opacity: 1;
+  }
+  &:hover &__action_drug {
+    opacity: 0.8;
+  }
+
+  &__action {
+    position: absolute;
+    opacity: 0;
+    transition: 0.3s;
+
+    &_delete {
+      top: 5px;
+      right: 5px;
+    }
+    &_drag {
+      top: 5px;
+      left: 5px;
+    }
+  }
+}

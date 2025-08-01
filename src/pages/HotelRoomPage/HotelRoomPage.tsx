@@ -37,7 +37,7 @@ const HotelRoomPage = () => {
   const handleEditRoom = async (data: {
     hotel: string;
     description: string;
-    images: File[];
+    images: Array<string | File>;
     isEnabled: boolean;
   }) => {
     if (!id || !hotelRoom?.hotel) return;
@@ -52,9 +52,9 @@ const HotelRoomPage = () => {
       }),
     );
     setIsEditModalOpen(false);
-    dispatch(hotelRoomRequest(id));
   };
 
+  // const images = hotelRoom.images;
   return (
     <>
       <main className="hotel-room">
@@ -106,7 +106,10 @@ const HotelRoomPage = () => {
             {user?.role !== 'client' && <p>Авторизуйтесь для бронирования</p>}
 
             <AddRoomModal
-              hotelId={hotelRoom?.hotel.id || ''}
+              hotelId={hotelRoom.hotel.id}
+              initialDescription={hotelRoom.description}
+              images={hotelRoom.images}
+              initialIsEnabled={hotelRoom.isEnabled}
               isOpen={isEditModalOpen}
               onClose={() => setIsEditModalOpen(false)}
               onSubmit={data => handleEditRoom(data)}

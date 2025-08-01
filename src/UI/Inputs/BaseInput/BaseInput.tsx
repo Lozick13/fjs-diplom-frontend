@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import type { InputBase, InputOption } from '../Input';
 import './baseinput.scss';
 
@@ -12,6 +13,7 @@ const BaseInput = ({
   placeholder,
   required,
   accept,
+  fileInput,
   disabled,
   options,
   multiple,
@@ -19,9 +21,17 @@ const BaseInput = ({
   rows = 3,
   lineDisplay = false,
 }: InputBase & { multiline?: boolean; rows?: number }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
   return (
     <div className={`base-input${lineDisplay ? ' base-input_line-display' : ''}`}>
-      {label && (
+      {label && !fileInput && (
         <label htmlFor={id} className="base-input__label">
           {label}
         </label>
@@ -55,6 +65,29 @@ const BaseInput = ({
           className="base-input__place base-input__textarea"
           rows={rows}
         />
+      ) : fileInput === true ? (
+        <div className="file-input">
+          <input
+            type="file"
+            id={id}
+            name={name}
+            ref={inputRef}
+            onChange={change}
+            accept={accept}
+            multiple={multiple}
+            disabled={disabled}
+            className="file-input__hidden"
+          />
+
+          <button
+            type="button"
+            onClick={handleClick}
+            className='file-input__button'
+          >
+            <span className="material-symbols-outlined">upload</span>
+            {label}
+          </button>
+        </div>
       ) : (
         <input
           id={id}
