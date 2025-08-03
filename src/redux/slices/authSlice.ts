@@ -77,14 +77,6 @@ export const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    registerSuccess: (state, action: PayloadAction<User>) => {
-      state.loading = false;
-      state.user = action.payload;
-    },
-    registerFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
   },
 });
 
@@ -96,8 +88,6 @@ export const {
   logoutSuccess,
   checkSession,
   registerRequest,
-  registerSuccess,
-  registerFailure,
 } = authSlice.actions;
 
 const authReducer = authSlice.reducer;

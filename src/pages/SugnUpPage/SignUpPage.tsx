@@ -18,7 +18,7 @@ const SignUpPage = () => {
   // states
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
+  const [phone, setPhone] = useState<string | undefined>();
   const [password, setPassword] = useState<string>('');
 
   // registration, reset states
@@ -28,7 +28,7 @@ const SignUpPage = () => {
       registerRequest({
         name,
         email,
-        contactPhone: phone.split(' ').join(''),
+        contactPhone: phone ? phone.split(' ').join('') : undefined,
         password,
       }),
     );
@@ -70,18 +70,7 @@ const SignUpPage = () => {
       placeholder: 'Ваш Email',
       required: true,
     },
-    {
-      label: 'Телефон',
-      id: 'phone',
-      name: 'phone',
-      value: phone,
-      type: 'tel',
-      change: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-      ) => setPhone(e.target.value),
-      placeholder: 'Ваш телефон',
-      required: false,
-    },
+
     {
       label: 'Пароль',
       id: 'password',
@@ -94,6 +83,18 @@ const SignUpPage = () => {
       min: 6,
       placeholder: 'Ваш пароль',
       required: true,
+    },
+    {
+      label: 'Телефон',
+      id: 'phone',
+      name: 'phone',
+      value: phone ? phone : '',
+      type: 'tel',
+      change: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+      ) => setPhone(e.target.value),
+      placeholder: 'Необязательное поле',
+      required: false,
     },
   ];
 
@@ -112,6 +113,13 @@ const SignUpPage = () => {
       type: 'button',
       text: 'Уже есть аккаунт?',
       secondary: true,
+    },
+    {
+      click: () => {
+        navigate('/hotel-rooms');
+      },
+      type: 'button',
+      text: 'Продолжить неавторизованным',
     },
   ];
 

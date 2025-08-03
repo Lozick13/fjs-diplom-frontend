@@ -10,7 +10,6 @@ import {
   logoutRequest,
   logoutSuccess,
   registerRequest,
-  registerSuccess,
 } from '../slices/authSlice';
 import { ApiError } from './ApiError';
 
@@ -66,24 +65,20 @@ function* registerSaga(
 ) {
   try {
     yield delay(DELAY);
-    const response: {
-      data: {
-        id: string;
-        email: string;
-        name: string;
-        role: string;
-        contactPhone?: string;
-      };
-    } = yield call(AuthApi.register, action.payload);
-    yield put(
-      registerSuccess({
-        id: response.data.id,
-        email: response.data.email,
-        name: response.data.name,
-        role: response.data.role,
-        contactPhone: response.data.contactPhone,
-      }),
-    );
+    yield call(AuthApi.register, action.payload);
+
+    const loginResponse: {
+      id: string;
+      email: string;
+      name: string;
+      role: string;
+      contactPhone?: string;
+    } = yield call(AuthApi.login, {
+      email: action.payload.email,
+      password: action.payload.password,
+    });
+
+    yield put(loginSuccess(loginResponse));
   } catch (error: unknown) {
     yield put(loginFailure(ApiError(error, 'Ошибка регистрации')));
   }

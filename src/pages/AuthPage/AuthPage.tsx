@@ -77,6 +77,13 @@ const AuthPage = () => {
       text: 'Ещё нет аккаунта?',
       secondary: true,
     },
+    {
+      click: () => {
+        navigate('/hotel-rooms');
+      },
+      type: 'button',
+      text: 'Продолжить неавторизованным',
+    },
   ];
 
   return (

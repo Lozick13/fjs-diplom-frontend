@@ -7,7 +7,7 @@
   border-radius: 20px;
   background-color: #fff;
   padding: 50px;
-  width: 50vw;
+  width: 60vw;
   max-width: 550px;
   height: auto;
 
@@ -16,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+     text-align: center;
     gap: 10px;
   }
   &__title {
