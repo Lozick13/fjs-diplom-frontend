@@ -10,6 +10,59 @@
   width: 100%;
   max-width: 1200px;
 
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__date-pickers {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  &__date-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    &-label {
+      font-size: 20px;
+    }
+    &-input {
+      width: 100%;
+      text-align: center;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(62, 99, 138, 0.25);
+      }
+
+      &::placeholder {
+        color: #999;
+        opacity: 1;
+        text-align: center;
+      }
+
+      &::-webkit-input-placeholder {
+        text-align: center;
+      }
+
+      &:-moz-placeholder {
+        text-align: center;
+      }
+
+      &::-moz-placeholder {
+        text-align: center;
+      }
+
+      &:-ms-input-placeholder {
+        text-align: center;
+      }
+    }
+  }
+
   &__cards {
     display: flex;
     flex-wrap: wrap;

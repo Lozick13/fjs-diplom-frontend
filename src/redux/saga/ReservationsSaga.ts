@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { call, delay, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, select, takeLatest } from 'redux-saga/effects';
 import { DELAY } from '.';
 import { ReservationsApi } from '../../api/reservations';
 import {
@@ -18,17 +18,33 @@ import { ApiError } from './ApiError';
 
 function* reservationsDataSaga(
   action: PayloadAction<{
-    id: string;
+    userId?: string;
+    dateStart?: string;
+    dateEnd?: string;
   }>,
 ) {
   try {
+    const { role } = yield select(state => state.auth.user);
     yield delay(DELAY);
 
-    const response: Reservation[] = yield call(
-      ReservationsApi.getClientReservations,
-      action.payload.id,
-    );
-    yield put(reservationsSuccess(response));
+    if (role === 'client') {
+      const response: Reservation[] = yield call(
+        ReservationsApi.getClientReservations,
+        action.payload,
+      );
+      yield put(reservationsSuccess(response));
+    }
+
+    if (role === 'manager') {
+      if (!action.payload.userId) throw new Error('Пользователь не введён');
+
+      const response: Reservation[] = yield call(ReservationsApi.getManagerReservations, {
+        userId: action.payload.userId,
+        dateStart: action.payload.dateStart,
+        dateEnd: action.payload.dateEnd,
+      });
+      yield put(reservationsSuccess(response));
+    }
   } catch (error: unknown) {
     yield put(reservationsFailure(ApiError(error, 'Ошибка загрузки гостиниц')));
   }
@@ -57,7 +73,14 @@ function* deleteReservationSaga(
 ) {
   try {
     yield delay(DELAY);
-    yield call(ReservationsApi.deleteReservation, action.payload.id);
+
+    const { role } = yield select(state => state.auth.user);
+
+    if (role === 'manager')
+      yield call(ReservationsApi.deleteManagerReservation, action.payload.id);
+    if (role === 'client')
+      yield call(ReservationsApi.deleteClientReservation, action.payload.id);
+
     yield put(deleteReservationSuccess());
   } catch (error: unknown) {
     yield put(

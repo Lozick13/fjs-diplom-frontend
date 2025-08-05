@@ -40,8 +40,11 @@ export const reservationsSlice = createSlice({
   name: 'reservations',
   initialState,
   reducers: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    reservationsRequest: (state, _action: PayloadAction<{ id: string }>) => {
+    reservationsRequest: (
+      state,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _action: PayloadAction<{ userId?: string; dateStart?: string; dateEnd?: string }>,
+    ) => {
       state.loading = true;
       state.error = null;
       state.reservations = [];
@@ -67,7 +70,7 @@ export const reservationsSlice = createSlice({
       state.loading = true;
       state.error = null;
       state.success = false;
-      state.deleteLoading = true;
+      state.deleteLoading = false;
       state.deleteError = null;
     },
     addReservationsSuccess: state => {

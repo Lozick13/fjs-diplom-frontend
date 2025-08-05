@@ -30,28 +30,28 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
       <header className="reservation-card__header">
         <h2 className="reservation-card__title">
           Бронь в гостиницу: <br />
-          {hotel.title}
+          <b> {hotel.title}</b>
         </h2>
         <Time startDate={startDate} endDate={endDate} />
       </header>
 
-      <div className="reservation-card__content">
-        <section className="reservation-card__info">
-          <div className="reservation-card__description">
-            <h3 className="reservation-card__subtitle">О гостинице:</h3>
-            <p>{hotel.description}</p>
-          </div>
-
+      <section className="reservation-card__info">
+        <article className="reservation-card__room">
           <div className="reservation-card__description">
             <h3 className="reservation-card__subtitle">О номере:</h3>
-            <p>{hotelRoom.description}</p>
+            <p className="reservation-card__text">{hotelRoom.description}</p>
           </div>
-        </section>
 
-        <section className="reservation-card__gallery">
-          <Slider images={hotelRoom.images} alt={`Фотографии отеля ${hotel.title}`} />
-        </section>
-      </div>
+          <div className="reservation-card__gallery">
+            <Slider images={hotelRoom.images} alt={`Фотографии отеля ${hotel.title}`} />
+          </div>
+        </article>
+
+        <div className="reservation-card__description">
+          <h3 className="reservation-card__subtitle">О гостинице:</h3>
+          <p className="reservation-card__text">{hotel.description}</p>
+        </div>
+      </section>
 
       <BaseButton
         text="Отменить бронь"

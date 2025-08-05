@@ -53,6 +53,7 @@ export const usersSlice = createSlice({
         contactPhone?: string;
       }>,
     ) => {
+      state.users = [];
       state.loading = true;
       state.error = null;
 
@@ -97,7 +98,14 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { usersRequest, usersSuccess, usersFailure,addUserRequest,addUserSuccess,addUserFailure } = usersSlice.actions;
+export const {
+  usersRequest,
+  usersSuccess,
+  usersFailure,
+  addUserRequest,
+  addUserSuccess,
+  addUserFailure,
+} = usersSlice.actions;
 
 const usersReducer = usersSlice.reducer;
 export default usersReducer;

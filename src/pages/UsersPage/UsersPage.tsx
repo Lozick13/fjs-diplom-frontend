@@ -12,24 +12,27 @@ const HotelsPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { loading, error, users, hasMore } = useAppSelector(state => state.users);
+  const { user } = useAppSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(usersRequest({}));
   }, [dispatch]);
   const handleLoadMore = useCallback(() => {
-    if (!loading && hasMore) {
-      dispatch(usersRequest({}));
-    }
+    if (!loading && hasMore) dispatch(usersRequest({}));
   }, [loading, hasMore, dispatch]);
 
   return (
     <main className="users">
       <Title
         text="Пользователи"
-        additionallyButton={{
-          click: () => navigate('/users/create'),
-          text: 'Добавить пользователя →',
-        }}
+        additionallyButton={
+          user?.role === 'admin'
+            ? {
+                click: () => navigate('/users/create'),
+                text: 'Добавить пользователя →',
+              }
+            : undefined
+        }
       />
 
       <section className="users__cards">

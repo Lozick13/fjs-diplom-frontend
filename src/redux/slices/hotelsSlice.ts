@@ -41,7 +41,7 @@ const initialState: HotelsState = {
 
   hasMore: true,
   searchParams: {
-    limit: 2,
+    limit: 10,
     offset: 0,
   },
 };
