@@ -26,7 +26,7 @@ export const HotelRoomsApi = {
     formData.append('hotel', data.hotel);
     formData.append('description', data.description);
     formData.append('isEnabled', String(data.isEnabled));
-    
+
     data.images.forEach(file => {
       formData.append('images', file);
     });
@@ -53,7 +53,6 @@ export const HotelRoomsApi = {
 
     const existingImages = data.images.filter(img => typeof img === 'string') as string[];
     const newImages = data.images.filter(img => typeof img !== 'string') as File[];
-    console.log('existingImages', existingImages);
 
     formData.append('existingImages', JSON.stringify(existingImages));
     newImages.forEach(file => {

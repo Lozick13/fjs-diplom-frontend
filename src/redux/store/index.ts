@@ -6,6 +6,8 @@ import type { HotelRoomState } from '../slices/hotelRoomsSlice';
 import hotelRoomsReducer from '../slices/hotelRoomsSlice';
 import hotelReducer, { type HotelsState } from '../slices/hotelsSlice';
 import reservationsReducer, { type ReservationsState } from '../slices/reservationsSlice';
+import type { SupportState } from '../slices/supportSlice';
+import supportReducer from '../slices/supportSlice';
 import usersReducer, { type UsersState } from '../slices/usersSlice';
 
 type AppState = {
@@ -14,6 +16,7 @@ type AppState = {
   hotelRooms: HotelRoomState;
   reservations: ReservationsState;
   users: UsersState;
+  support: SupportState;
 };
 
 export const saveAuthState: Middleware<object, AppState> =
@@ -49,6 +52,7 @@ const store = configureStore({
     hotelRooms: hotelRoomsReducer,
     reservations: reservationsReducer,
     users: usersReducer,
+    support: supportReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

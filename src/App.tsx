@@ -10,6 +10,7 @@ import HotelRoomsPage from './pages/HotelRoomsPage/HotelRoomsPage';
 import HotelsPage from './pages/HotelsPage/HotelsPage';
 import ReservationsPage from './pages/ReservationsPage/ReservationsPage';
 import SignUpPage from './pages/SugnUpPage/SignUpPage';
+import SupportPage from './pages/SupportPage/SupportPage';
 import UsersPage from './pages/UsersPage/UsersPage';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/hotels" element={requireAuth(<HotelsPage />)} />
         <Route path="/users" element={requireAuth(<UsersPage />)} />
         <Route path="/users/create" element={requireAuth(<AddUserPage />)} />
+        <Route path="/support" element={requireAuth(<SupportPage />)} />
       </Routes>
     </>
   );

@@ -23,8 +23,6 @@ export const ReservationsApi = {
     if (data.dateStart) params.append('dateStart', data.dateStart);
     if (data.dateEnd) params.append('dateEnd', data.dateEnd);
 
-    console.log('data', data);
-
     const response = await api.get(
       `/manager/reservations/${data.userId}?${params.toString()}`,
     );

@@ -1,6 +1,9 @@
 .logo-loader {
   width: 50px;
 
+  &_big {
+    width: 150px;
+  }
   &_active {
     animation: logo-loader 1.2s ease-in-out infinite;
   }

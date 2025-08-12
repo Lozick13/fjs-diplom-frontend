@@ -32,11 +32,13 @@ export interface InputBase {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  onEnterPress?: () => void;
   label?: string;
   multiline?: boolean;
   rows?: number;
   fileInput?: boolean;
   accept?: string;
+  maxLength?: number;
   options?: InputOption[];
   multiple?: boolean;
   lineDisplay?: boolean;

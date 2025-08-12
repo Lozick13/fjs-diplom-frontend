@@ -1,0 +1,47 @@
+.chat-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+
+  &__img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #fff6ba;
+    padding: 10px;
+    width: 50px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 15px;
+    background: #f5f5f5;
+    padding: 10px;
+    min-width: 100px;
+    max-width: 45%;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 17px;
+  }
+  &__text {
+    width: 100%;
+    max-width: 30vw;
+    overflow-wrap: break-word;
+  }
+
+  &__time {
+    color: #999;
+    font-size: 13px;
+  }
+
+  &_owner {
+    flex-direction: row-reverse;
+  }
+  &_owner &__info {
+    background: #ffffed;
+  }
+}

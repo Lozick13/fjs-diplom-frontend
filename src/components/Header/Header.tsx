@@ -5,6 +5,7 @@ import ImgButton from '../../UI/buttons/ImgButton/ImgButton';
 import './header.scss';
 
 const Header = () => {
+  //hooks
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.auth);
@@ -36,16 +37,20 @@ const Header = () => {
               img="/assets/reservation.svg"
             />
           )}
-          <ImgButton
-            click={() => navigate('/support')}
-            color="#D68D17"
-            img="/assets/chats.svg"
-          />
-          <ImgButton
-            click={() => navigate('/users')}
-            color="#D68D17"
-            img="/assets/users.svg"
-          />
+          {user?.role !== 'client' && user && (
+            <ImgButton
+              click={() => navigate('/users')}
+              color="#D68D17"
+              img="/assets/users.svg"
+            />
+          )}
+          {user && (
+            <ImgButton
+              click={() => navigate('/support')}
+              color="#D68D17"
+              img="/assets/chats.svg"
+            />
+          )}
           {user ? (
             <ImgButton
               click={async () => {
