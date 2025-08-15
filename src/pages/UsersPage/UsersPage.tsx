@@ -15,7 +15,7 @@ const HotelsPage = () => {
   const { user } = useAppSelector(state => state.auth);
 
   useEffect(() => {
-    dispatch(usersRequest({}));
+    dispatch(usersRequest({ reset: true }));
   }, [dispatch]);
   const handleLoadMore = useCallback(() => {
     if (!loading && hasMore) dispatch(usersRequest({}));

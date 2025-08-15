@@ -88,10 +88,12 @@ export const hotelRoomsSlice = createSlice({
     hotelRoomRequest: (state, _action: PayloadAction<string>) => {
       state.loading = true;
       state.error = null;
+      
       state.hotelRoom = null;
     },
     hotelRoomSuccess: (state, action: PayloadAction<HotelRoom>) => {
       state.loading = false;
+      console.log('action.payload',action.payload)
       state.hotelRoom = action.payload;
     },
     hotelRoomFailure: (state, action: PayloadAction<string>) => {

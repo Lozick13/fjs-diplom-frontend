@@ -35,7 +35,7 @@ const initialState: UsersState = {
 
   hasMore: true,
   searchParams: {
-    limit: 2,
+    limit: 10,
     offset: 0,
   },
 };
@@ -47,13 +47,12 @@ export const usersSlice = createSlice({
     usersRequest: (
       state,
       action: PayloadAction<{
-        reset?: string;
+        reset?: boolean;
         name?: string;
         email?: string;
         contactPhone?: string;
       }>,
     ) => {
-      state.users = [];
       state.loading = true;
       state.error = null;
 

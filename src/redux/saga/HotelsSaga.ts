@@ -53,6 +53,7 @@ function* addHotelSaga(action: PayloadAction<{ title: string; description: strin
   try {
     yield delay(DELAY);
     yield call(HotelsApi.create, action.payload);
+    yield put(hotelsRequest({ reset: true }));
     yield put(addHotelSuccess());
   } catch (error: unknown) {
     yield put(addHotelFailure(ApiError(error, 'Ошибка при добавлении гостиницы')));
@@ -65,6 +66,7 @@ function* updateHotelSaga(
   try {
     yield delay(DELAY);
     yield call(HotelsApi.update, action.payload);
+    yield put(hotelRequest(action.payload.id));
     yield put(updateHotelSuccess());
   } catch (error: unknown) {
     yield put(updateHotelFailure(ApiError(error, 'Ошибка при обновлении гостиницы')));

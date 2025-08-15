@@ -27,7 +27,8 @@ function App() {
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/hotel-rooms" element={<HotelRoomsPage />} />{' '}
+        <Route path="/" element={<HotelRoomsPage />} />
+        <Route path="/hotel-rooms" element={<HotelRoomsPage />} />
         <Route path="/hotel-rooms/:id" element={<HotelRoomPage />} />
         <Route path="/reservations" element={requireAuth(<ReservationsPage />)} />
         <Route path="/reservations/:id" element={requireAuth(<ReservationsPage />)} />

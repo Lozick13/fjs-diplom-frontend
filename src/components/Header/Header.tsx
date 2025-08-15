@@ -44,7 +44,7 @@ const Header = () => {
               img="/assets/users.svg"
             />
           )}
-          {user && (
+          {user && user?.role !== 'admin' && (
             <ImgButton
               click={() => navigate('/support')}
               color="#D68D17"
