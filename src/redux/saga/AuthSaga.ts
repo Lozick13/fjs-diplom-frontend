@@ -21,7 +21,7 @@ function* loginSaga(action: PayloadAction<{ email: string; password: string }>) 
       id: string;
       email: string;
       name: string;
-      role: string;
+      role: 'admin' | 'manager' | 'client';
       contactPhone?: string;
     } = yield call(AuthApi.login, {
       email,
@@ -71,7 +71,7 @@ function* registerSaga(
       id: string;
       email: string;
       name: string;
-      role: string;
+      role: 'admin' | 'manager' | 'client';
       contactPhone?: string;
     } = yield call(AuthApi.login, {
       email: action.payload.email,
