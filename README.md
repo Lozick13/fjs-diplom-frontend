@@ -32,3 +32,6 @@ docker-compose up --build
 | ------------ | ----------------------- | ------------------------------------------------------ |
 | VITE_API_URL | Базовый URL бэкенда     | [http://localhost:3000/api](http://localhost:3000/api) |
 | VITE_URL     | Базовый URL API бэкенда | http://localhost:3003                                  |
+
+### Ссылка на бэкенд
+https://github.com/Lozick13/fjs-diplom-backend
